@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">WildcatFreshFinds</string>
+    <string name="right_claw_mark_of_a_tiger">Right claw mark of a tiger.</string>
+    <string name="left_claw_mark_of_a_tiger">Left claw mark of a tiger.</string>
+    <string name="tiger_mascot_for_landing_page">Tiger mascot for landing page.</string>
+    <string name="the_name_of_the_app">The name of the app.</string>
+    <string name="underline_for_the_app_name">Underline for the app name.</string>
+    <string name="find_second_hand_goods_from_upper_classmen">FIND SECOND HAND GOODS\nFROM UPPER-CLASSMEN!</string>
+    <string name="book_icon">Book Icon</string>
+    <string name="uniform_icon">Uniform Icon</string>
+    <string name="login">LOGIN</string>
+    <string name="register">REGISTER</string>
+    <string name="wildcat_fresh_finds">Wildcat\nFreshFinds</string>
+    <string name="main_mascot">main mascot</string>
+    <string name="let_s_get_started">Let\'s Get Started</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="email">Email</string>
+    <string name="full_name">Full Name</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="sign_in"><u>Sign In</u></string>
+    <string name="welcome_back">Welcome Back!</string>
+    <string name="access_your_account">Access your account</string>
+</resources>
