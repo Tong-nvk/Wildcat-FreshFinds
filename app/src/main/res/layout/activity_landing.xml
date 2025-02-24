@@ -11,131 +11,100 @@
 
 
 
-
-
     <!--MASCOTS-->
+
+
+
     <ImageView
         android:id="@+id/landing_mascot"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        app:layout_constraintStart_toEndOf="@id/landing_left_claw"
-        app:layout_constraintEnd_toStartOf="@id/landing_right_claw"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintTop_toTopOf="parent"
         android:src="@drawable/landing_mascot"
         android:contentDescription="@string/tiger_mascot_for_landing_page"
-    />
-
-
-
+        />
 
     <ImageView
         android:id="@+id/landing_left_claw"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
 
-        android:adjustViewBounds="true"
-        android:scaleType="fitStart"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/landing_mascot"
-        app:layout_constraintBottom_toTopOf="@id/view_sss"
-        android:src="@drawable/left_claw"
-
-        android:contentDescription="@string/left_claw_mark_of_a_tiger" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_max_width"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="-1dp" />
+
+        app:layout_constraintRight_toLeftOf="@id/landing_mascot"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/landing_mascot"
+        android:src="@drawable/left_claw"
+        android:contentDescription="@string/left_claw_mark_of_a_tiger"
+
+        />
 
     <ImageView
         android:id="@+id/landing_right_claw"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:scaleType="fitStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintLeft_toRightOf="@id/landing_mascot"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/landing_mascot"
-        app:layout_constraintBottom_toTopOf="@id/view_ssss"
+        app:layout_constraintBottom_toBottomOf="@id/landing_mascot"
 
         android:src="@drawable/right_claw"
         android:contentDescription="@string/right_claw_mark_of_a_tiger"
-
         />
+    <!--        APP NAME AND DESCRIPTION-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/landing_app_name"-->
+
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="25dp"-->
 
 
-    <View
-        android:id="@+id/view_sss"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
-        app:layout_constraintBottom_toTopOf="@id/landing_login_button"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/white"
-        />
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/landing_mascot"-->
+    <!--        app:layout_constraintBottom_toTopOf="@id/landing_underline"-->
+    <!--        app:layout_constraintHorizontal_bias="0.5"-->
+    <!--        android:gravity="center"-->
+    <!--        android:lineSpacingExtra="-20dp"-->
+    <!--        android:text="@string/wildcat_fresh_finds"-->
 
-    <View
-        android:id="@+id/view_ssss"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
-        app:layout_constraintBottom_toTopOf="@id/landing_login_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:background="@color/white"
-        />
+    <!--        android:shadowColor="@color/maroon"-->
+    <!--        android:shadowRadius="2"-->
+    <!--        android:shadowDx="6"-->
+    <!--        android:shadowDy="8"-->
 
-<!--    APP NAME AND DESCRIPTION-->
-
-<!--    <ImageView-->
-<!--        android:id="@+id/landing_app_name"-->
-
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="25dp"-->
+    <!--        android:textSize="50sp"-->
+    <!--        android:fontFamily="@font/anton_sc_regular"-->
+    <!--        android:textColor="@color/gold" />-->
 
 
-
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/landing_mascot"-->
-<!--        app:layout_constraintBottom_toTopOf="@id/landing_underline"-->
-<!--        app:layout_constraintHorizontal_bias="0.5"-->
-
-<!--        android:src="@drawable/app_name"-->
-<!--        android:contentDescription="@string/the_name_of_the_app"-->
-<!--        />-->
-
-    <TextView
+    <ImageView
         android:id="@+id/landing_app_name"
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="20dp"
 
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/landing_mascot"
+        android:contentDescription="@string/the_name_of_the_app"
+        android:src="@drawable/app_name"
         app:layout_constraintBottom_toTopOf="@id/landing_underline"
-        app:layout_constraintHorizontal_bias="0.5"
-        android:gravity="center"
-        android:lineSpacingExtra="-20dp"
-        android:text="@string/wildcat_fresh_finds"
-
-        android:shadowColor="@color/maroon"
-        android:shadowRadius="2"
-        android:shadowDx="6"
-        android:shadowDy="8"
-
-        android:textSize="50sp"
-        android:fontFamily="@font/anton_sc_regular"
-        android:textColor="@color/gold" />
+        app:layout_constraintEnd_toEndOf="parent"
 
 
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
 
-
+        app:layout_constraintTop_toBottomOf="@id/landing_mascot"
+        app:layout_constraintVertical_chainStyle="packed"
+        />
 
     <ImageView
         android:id="@+id/landing_underline"
@@ -182,13 +151,11 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-
+        android:layout_marginTop="15dp"
         app:layout_constraintTop_toBottomOf="@id/landing_description"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/icon_book_stack"
-        app:layout_constraintBottom_toTopOf="@id/landing_login_button"
-
+        android:scaleType="center"
         android:src="@drawable/icon_pen"
         android:contentDescription="@string/uniform_icon"
 
@@ -200,13 +167,13 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:paddingTop="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
         android:contentDescription="@string/book_icon"
         android:src="@drawable/icon_book"
         app:layout_constraintBottom_toTopOf="@id/landing_login_button"
         app:layout_constraintEnd_toStartOf="@id/icon_uniform"
-
+        android:scaleType="center"
         app:layout_constraintStart_toEndOf="@id/icon_pen"
         app:layout_constraintTop_toBottomOf="@id/landing_description"
 
@@ -218,19 +185,18 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-
+        android:layout_marginTop="15dp"
+        android:scaleType="center"
         app:layout_constraintStart_toEndOf="@id/icon_book_stack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/landing_description"
-        app:layout_constraintBottom_toTopOf="@id/landing_login_button"
         android:src="@drawable/icon_uniform"
         android:contentDescription="@string/uniform_icon"
         />
 
 
 
-<!--NAVIGATION BUTTONS-->
+    <!--NAVIGATION BUTTONS-->
     <Button
         android:id="@+id/landing_login_button"
 
@@ -240,10 +206,11 @@
 
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
+        android:layout_marginBottom="15dp"
+
         app:layout_constraintTop_toBottomOf="@id/icon_book_stack"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintBottom_toTopOf="@+id/landing_register_button"
         android:background="@drawable/maroon_button"
         android:textSize="18sp"
@@ -259,24 +226,23 @@
 
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginTop="5dp"
 
-        android:layout_marginBottom="30dp"
         android:background="@drawable/transparent_button"
         android:text="@string/register"
         android:textColor="@color/maroon"
         android:textSize="18sp"
 
+        android:layout_marginBottom="50dp"
 
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
 
         android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/landing_login_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/landing_login_button"
 
         />
 

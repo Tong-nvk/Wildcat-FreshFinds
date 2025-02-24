@@ -23,4 +23,29 @@
     <string name="welcome_back">Welcome Back!</string>
     <string name="access_your_account">Access your account</string>
     <string name="wildcat_freshfinds">Wildcat\nFreshFinds</string>
+    <string name="profile">Profile</string>
+    <string name="profile_icon">Profile Icon</string>
+    <string name="john_doe">John Doe</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="star_icon">Star Icon</string>
+    <string name="john_doe_email_com"><u>john.doe@email.com</u></string>
+    <string name="pass_value">••••••••</string>
+    <string name="edit">EDIT</string>
+    <string name="settings">SETTINGS</string>
+    <string name="home">Home</string>
+    <string name="cart">Cart</string>
+    <string name="transaction">Transaction</string>
+    <string name="settings_lowercase">Settings</string>
+    <string name="community_guidelines">COMMUNITY GUIDELINES</string>
+    <string name="about_the_developers">ABOUT THE DEVELOPERS</string>
+    <string name="log_out">LOG OUT</string>
+    <string name="tweak_refine_and_rule_the_wildcat_marketplace">Tweak, refine, and rule the Wildcat marketplace!</string>
+    <string name="developers">Developers</string>
+    <string name="jude_mikael_valencia">Jude Mikael Valencia</string>
+    <string name="developer_cs_student"><![CDATA[Developer & CS Student]]></string>
+    <string name="valencia_desc">I\'m a 2nd-year Computer Science student at CIT-U, passionate about creating efficient and user-friendly applications. I developed this e-commerce app to help students buy and sell second-hand items easily.</string>
+    <string name="shervin_dale_tabernero">Shervin Dale Tabernero</string>
+    <string name="tabernero_desc">As a 2nd-year Computer Science student at CIT-U, I enjoy building practical and user-friendly applications. This e-commerce app helps students easily buy and sell second-hand items.</string>
+    <string name="sign_up"><u>Sign Up</u></string>
+
 </resources>

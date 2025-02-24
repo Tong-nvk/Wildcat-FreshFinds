@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Background color -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/maroon" />
+        </shape>
+    </item>
+
+    <!-- Top border -->
+    <item android:top="2dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/container_bg" /> <!-- Change to your border color -->
+            <size android:height="0dp"/> <!-- Border thickness -->
+        </shape>
+    </item>
+
+</layer-list>
