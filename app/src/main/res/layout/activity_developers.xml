@@ -45,6 +45,24 @@
 
         />
 
+    <TextView
+        android:id="@+id/meet_the_team_txt"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/profile_developer_1"
+
+        android:text="@string/meet_the_team"
+        android:textSize="35sp"
+        android:textColor="@color/maroon"
+        android:fontFamily="@font/anybody_black"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        />
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_developer_1"
         android:layout_width="100dp"
@@ -75,7 +93,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header"
+        app:layout_constraintTop_toBottomOf="@+id/meet_the_team_txt"
         app:layout_constraintBottom_toTopOf="@id/profile_container_2"
         app:layout_constraintVertical_bias="0.505" />
 

@@ -20,7 +20,6 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN
-
         val emailField = findViewById<EditText>(R.id.email_input)
         val passwordField = findViewById<EditText>(R.id.password_input)
         val loginButton = findViewById<Button>(R.id.login_button)
@@ -48,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
             Log.e("Button Click", "Login Button Clicked")
             showToast("Login Successful!")
 
-            val intent = Intent(this, ProfileActivity::class.java)
+            val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
         }
 

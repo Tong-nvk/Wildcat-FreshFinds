@@ -47,7 +47,9 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/community_guidelines_container"
 
-        android:layout_width="350dp"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_min="100dp"
+        app:layout_constraintWidth_max="350dp"
         android:layout_height="45dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="20dp"
@@ -57,12 +59,11 @@
         app:cardBackgroundColor="@color/container_bg"
         app:cardCornerRadius="12dp"
         app:cardElevation="10dp"
-        app:layout_constraintBottom_toTopOf="@id/developer_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header"
         app:layout_constraintVertical_bias="0.502"
-        app:layout_constraintVertical_chainStyle="packed" />
+         />
 
 
         <ImageView
@@ -102,6 +103,8 @@
         android:id="@+id/developer_container"
 
         android:layout_width="0dp"
+        app:layout_constraintWidth_min="100dp"
+        app:layout_constraintWidth_max="350dp"
         android:layout_height="50dp"
         android:background="@color/container_bg"
         app:cardBackgroundColor="@color/container_bg"
@@ -156,7 +159,8 @@
         android:id="@+id/log_out_container"
 
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        app:layout_constraintWidth_max="350dp"
+        android:layout_height="45dp"
         android:background="@color/container_bg"
         app:cardBackgroundColor="@color/container_bg"
         app:cardCornerRadius="12dp"
@@ -213,6 +217,9 @@
         android:src="@drawable/settings_mascot"
         android:scaleType="fitXY"
         android:paddingTop="30dp"
+        app:layout_constraintWidth_max="500dp"
+        app:layout_constraintHeight_max="500dp"
+        app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintTop_toBottomOf="@id/log_out_container"
         app:layout_constraintBottom_toTopOf="@id/message_container"
@@ -225,6 +232,9 @@
 
         android:layout_width="0dp"
         android:layout_height="100dp"
+        app:layout_constraintWidth_max="450dp"
+
+
         android:background="@color/container_bg"
         app:cardBackgroundColor="@color/container_bg"
         app:cardCornerRadius="12dp"
@@ -232,13 +242,12 @@
 
 
 
-        android:layout_marginTop="20dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
+        app:layout_constraintTop_toBottomOf="@id/settings_mascot"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.502"
 
         android:layout_marginBottom="50dp"
         />
