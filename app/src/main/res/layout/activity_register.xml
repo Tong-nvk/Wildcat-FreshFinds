@@ -337,7 +337,7 @@
                 android:gravity="center"
                 android:textColor="@color/background"
                 android:textSize="19sp"
-                android:text="@string/login"
+                android:text="@string/register"
 
                 android:fontFamily="@font/anybody_bold"
                 android:background="@drawable/login_register_button"

@@ -47,7 +47,7 @@
     <string name="shervin_dale_tabernero">Shervin Dale Tabernero</string>
     <string name="tabernero_desc">As a 2nd-year Computer Science student at CIT-U, I enjoy building practical and user-friendly applications. This e-commerce app helps students easily buy and sell second-hand items.</string>
     <string name="sign_up"><u>Sign Up</u></string>
-    <string name="hi_john_welcome_to_wildcat_freshfinds">Hi <b>John!</b>\nWelcome to Wildcat FreshFinds!</string>
+    <string name="welcome_message">Welcome to Wildcat FreshFinds!</string>
     <string name="search">Search</string>
     <string name="all">All</string>
     <string name="uniform">Uniform</string>
@@ -55,5 +55,8 @@
     <string name="nothing_here">NOTHING HERE</string>
     <string name="no_items">There are no items for sale yet</string>
     <string name="meet_the_team">MEET THE TEAM</string>
+    <string name="hi">Hi,</string>
+    <string name="are_you_sure_you_want_to_log_out">Are you sure you want to log out?</string>
+    <string name="cancel">CANCEL</string>
 
 </resources>

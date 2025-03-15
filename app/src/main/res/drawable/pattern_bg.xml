@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Background Color Layer -->
+    <item android:drawable="@color/background" />
+
+    <!-- Bitmap Pattern Layer -->
+    <item>
+        <bitmap
+            android:src="@drawable/patt"
+            android:tileMode="repeat"
+            android:gravity="fill"/>
+    </item>
+
+</layer-list>

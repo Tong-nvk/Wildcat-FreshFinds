@@ -1,8 +1,8 @@
 
 package cit.edu.WildcatFreshFinds
-object UserManager {
+public object UserManager {
     private var users = ArrayList<User>();
-
+    private var signedIn: User? = null;
     fun registerUser(fullName : String, email : String, password: String): String{
 
         if(users.any{it.email == email}){
@@ -13,10 +13,19 @@ object UserManager {
         return "Registration Successful!"
     }
     fun loginUser(email: String, password: String): Boolean{
+        signedIn = users.find{it.email == email && it.password == password}
+
         return users.any{it.email == email && it.password == password}
     }
 
+    fun signOut() {
+        signedIn = null;
+    }
     fun getUsers() {
         println(this.users)
+    }
+
+    fun getSignedIn(): User? {
+        return signedIn;
     }
 }

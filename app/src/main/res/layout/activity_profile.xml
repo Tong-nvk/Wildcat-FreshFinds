@@ -27,7 +27,7 @@
         android:gravity="center"
         android:text="@string/profile"
         android:textColor="@color/gold"
-        android:textSize="43sp"
+        android:textSize="30sp"
         app:layout_constraintTop_toTopOf="@id/header"
         app:layout_constraintBottom_toBottomOf="@id/header"
         app:layout_constraintStart_toStartOf="parent"
@@ -250,7 +250,7 @@
 
         <Button
             android:id="@+id/edit_button"
-
+            android:elevation="12dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
 
@@ -280,7 +280,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_container"
-/>
+
+        android:clickable="true"
+        android:focusable="true"
+        />
 
 
 
@@ -299,6 +302,8 @@
         app:layout_constraintEnd_toStartOf="@id/settings_label"
         android:src="@drawable/settings_icon"
 
+        android:clickable="true"
+        android:focusable="true"
         />
 
     <TextView
@@ -317,6 +322,9 @@
         android:fontFamily="@font/anybody_regular"
         android:textSize="20sp"
         android:textStyle="bold"
+
+        android:clickable="true"
+        android:focusable="true"
         />
 
 

@@ -27,13 +27,15 @@
         android:gravity="center"
         android:text="@string/developers"
         android:textColor="@color/gold"
-        android:textSize="35sp"
+        android:textSize="30sp"
         app:layout_constraintTop_toTopOf="@id/header"
         app:layout_constraintBottom_toBottomOf="@id/header"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <ImageView
+        android:id="@+id/back_icon"
+
         android:layout_width="52dp"
         android:layout_height="52dp"
 
@@ -63,6 +65,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         />
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_developer_1"
         android:layout_width="100dp"
@@ -71,11 +74,9 @@
         android:elevation="11dp"
         android:background="@drawable/profile_bg"
         app:layout_constraintBottom_toTopOf="@id/profile_container_1"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/profile_container_1"
-        app:layout_constraintVertical_bias="0.503"
         />
 
     <androidx.cardview.widget.CardView
@@ -153,7 +154,7 @@
         android:id="@+id/profile_developer_2"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/valencia_about"
+        android:src="@drawable/tabernero_about"
         android:elevation="11dp"
         android:background="@drawable/profile_bg"
         app:layout_constraintBottom_toTopOf="@id/profile_container_2"

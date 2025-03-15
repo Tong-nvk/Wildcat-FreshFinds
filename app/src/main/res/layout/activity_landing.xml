@@ -160,6 +160,7 @@
         android:contentDescription="@string/uniform_icon"
 
         app:layout_constraintHorizontal_chainStyle="packed"
+
         />
 
     <ImageView
