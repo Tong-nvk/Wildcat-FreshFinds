@@ -43,6 +43,7 @@
             android:layout_marginStart="10dp"
             android:src="@drawable/back_icon"
 
+            android:contentDescription="Back button"
             android:clickable="true"
             android:focusable="true"
             />

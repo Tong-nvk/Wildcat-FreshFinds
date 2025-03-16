@@ -13,6 +13,7 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
@@ -24,7 +25,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         val fullName = view.findViewById<TextView>(R.id.user_name);
         val email = view.findViewById<TextView>(R.id.email_value);
-        val password = view.findViewById<TextView>(R.id.password_value);
 
         fullName.text = UserManager.getSignedIn()?.fullName
         email.text = UserManager.getSignedIn()?.email
@@ -32,6 +32,18 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         editButton.setOnClickListener {
             showCustomDialogBox()
         }
+
+        val settingsContainer: CardView = view.findViewById(R.id.settings_container)
+
+        settingsContainer.setOnClickListener {
+            Log.e("Button Click", "Settings Navigation Button Clicked")
+            showToast("Settings")
+
+            val intent = Intent(requireContext(), SettingsActivity::class.java)
+            startActivity(intent)
+        }
+
+
     }
 
 
