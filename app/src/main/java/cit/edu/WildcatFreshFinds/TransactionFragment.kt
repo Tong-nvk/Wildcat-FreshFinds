@@ -23,12 +23,11 @@ class TransactionFragment : Fragment(R.layout.fragment_transaction) {
         ongoingTransactionButton = view.findViewById(R.id.ongoing_transaction_button)
         sellingItemsButton = view.findViewById(R.id.selling_items)
 
-        if (savedInstanceState == null) {
-            replaceFragment(ongoingTransactionFragment)
 
-            currentButton = ongoingTransactionButton
-            setActiveButton(ongoingTransactionButton)
-        }
+        replaceFragment(ongoingTransactionFragment)
+        currentButton = ongoingTransactionButton
+        setActiveButton(ongoingTransactionButton)
+
 
         ongoingTransactionButton.setOnClickListener {
             Log.e("Button Click", "Ongoing Transaction Button Clicked!")
