@@ -1,3 +1,3 @@
 package cit.edu.WildcatFreshFinds
 
-data class User(val fullName: String, val email: String, val password: String);
+data class User(var fullName: String, val email: String, var password: String);

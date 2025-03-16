@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true"
+    tools:context=".OngoingTransactionFragment">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        >
+
+
+        <ImageView
+            android:id="@+id/tiger_nothing_img"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/nothing_here_img"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/nothing_here_txt"
+
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/nothing_here_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="26sp"
+            android:text="@string/nothing_here"
+            android:fontFamily="@font/anybody_black"
+            android:textColor="@color/maroon"
+
+            app:layout_constraintTop_toBottomOf="@id/tiger_nothing_img"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/no_items_txt"
+
+            /> <!-- Apply to all views in the chain -->
+
+        <TextView
+            android:id="@+id/no_items_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:text="There are no ongoing transactions yet"
+            android:fontFamily="@font/anybody_regular"
+            android:textColor="@color/gold"
+
+            app:layout_constraintTop_toBottomOf="@id/nothing_here_txt"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

@@ -34,12 +34,13 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:elevation="40dp"
 
         app:layout_constraintRight_toLeftOf="@id/landing_mascot"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/landing_mascot"
-        android:src="@drawable/left_claw"
+        android:src="@drawable/left_claw_pic"
         android:contentDescription="@string/left_claw_mark_of_a_tiger"
 
         />
@@ -54,57 +55,63 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/landing_mascot"
 
-        android:src="@drawable/right_claw"
+        android:src="@drawable/left_claw_pic"
+        android:scaleX="-1"
         android:contentDescription="@string/right_claw_mark_of_a_tiger"
         />
     <!--        APP NAME AND DESCRIPTION-->
 
-    <!--    <TextView-->
-    <!--        android:id="@+id/landing_app_name"-->
+        <TextView
+            android:id="@+id/landing_app_name"
 
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="25dp"-->
-
-
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@id/landing_mascot"-->
-    <!--        app:layout_constraintBottom_toTopOf="@id/landing_underline"-->
-    <!--        app:layout_constraintHorizontal_bias="0.5"-->
-    <!--        android:gravity="center"-->
-    <!--        android:lineSpacingExtra="-20dp"-->
-    <!--        android:text="@string/wildcat_fresh_finds"-->
-
-    <!--        android:shadowColor="@color/maroon"-->
-    <!--        android:shadowRadius="2"-->
-    <!--        android:shadowDx="6"-->
-    <!--        android:shadowDy="8"-->
-
-    <!--        android:textSize="50sp"-->
-    <!--        android:fontFamily="@font/anton_sc_regular"-->
-    <!--        android:textColor="@color/gold" />-->
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
 
 
-    <ImageView
-        android:id="@+id/landing_app_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/landing_mascot"
+            app:layout_constraintBottom_toTopOf="@id/landing_underline"
+            app:layout_constraintHorizontal_bias="0.5"
 
-        android:layout_width="0dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:lineSpacingExtra="-25dp"
+            android:text="@string/wildcat_fresh_finds"
+            android:shadowColor="@color/maroon"
+            android:shadowRadius="2"
+            android:shadowDx="6"
+            android:shadowDy="8"
 
-        android:contentDescription="@string/the_name_of_the_app"
-        android:src="@drawable/app_name"
-        app:layout_constraintBottom_toTopOf="@id/landing_underline"
-        app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            android:textSize="60sp"
+            android:fontFamily="@font/anton_sc_regular"
+            android:textColor="@color/gold" />
 
 
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
 
-        app:layout_constraintTop_toBottomOf="@id/landing_mascot"
-        app:layout_constraintVertical_chainStyle="packed"
-        />
+<!--    <ImageView-->
+<!--        android:id="@+id/landing_app_name"-->
+
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="150dp"-->
+<!--        android:layout_marginTop="20dp"-->
+
+<!--        android:contentDescription="@string/the_name_of_the_app"-->
+<!--        android:src="@drawable/app_name"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/landing_underline"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+
+
+<!--        app:layout_constraintHorizontal_bias="0.497"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+
+<!--        app:layout_constraintTop_toBottomOf="@id/landing_mascot"-->
+<!--        app:layout_constraintVertical_chainStyle="packed"-->
+<!--        />-->
+
+
+
 
     <ImageView
         android:id="@+id/landing_underline"
@@ -118,7 +125,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintBottom_toTopOf="@id/landing_description"
-        android:src="@drawable/underline"
+        android:src="@drawable/underline_svg"
         android:contentDescription="@string/underline_for_the_app_name"
 
         />
@@ -201,6 +208,7 @@
     <Button
         android:id="@+id/landing_login_button"
 
+        android:elevation="12dp"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"

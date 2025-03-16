@@ -7,7 +7,7 @@
     <!-- Bitmap Pattern Layer -->
     <item>
         <bitmap
-            android:src="@drawable/patt"
+            android:src="@drawable/pattern_school_supplies"
             android:tileMode="repeat"
             android:gravity="fill"/>
     </item>

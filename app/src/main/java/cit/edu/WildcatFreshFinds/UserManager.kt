@@ -18,6 +18,18 @@ public object UserManager {
         return users.any{it.email == email && it.password == password}
     }
 
+    fun editUser(fullName : String, password : String): Boolean {
+        val user = users.find { it.email == getSignedIn()?.email }
+        user?.let {
+            it.fullName = fullName
+            it.password = password
+        }
+        if(user != null)
+        signedIn = user
+
+        return user != null;
+    }
+
     fun signOut() {
         signedIn = null;
     }
