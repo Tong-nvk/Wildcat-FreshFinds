@@ -7,7 +7,9 @@
     android:layout_height="match_parent"
     tools:context=".LandingActivity"
     android:background="@color/background"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:fitsSystemWindows="true">
+
 
 
 

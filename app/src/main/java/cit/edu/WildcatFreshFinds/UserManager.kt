@@ -25,7 +25,7 @@ public object UserManager {
             it.password = password
         }
         if(user != null)
-        signedIn = user
+            signedIn = user
 
         return user != null;
     }

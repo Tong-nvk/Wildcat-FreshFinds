@@ -33,14 +33,7 @@
 //        }
 //
 //        log_out_button.setOnClickListener {
-//            UserManager.signOut()
-//
-//            Log.e("Button Click", "Log Out Button Navigation Clicked")
-//            showToast("Landing")
-//
-//            val intent = Intent(this, LandingActivity::class.java)
-//            startActivity(intent)
-//            finish()
+
 //        }
 //
 //    }

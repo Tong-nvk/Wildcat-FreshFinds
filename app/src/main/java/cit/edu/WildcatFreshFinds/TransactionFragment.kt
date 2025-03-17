@@ -24,9 +24,11 @@ class TransactionFragment : Fragment(R.layout.fragment_transaction) {
         sellingItemsButton = view.findViewById(R.id.selling_items)
 
 
-        replaceFragment(ongoingTransactionFragment)
-        currentButton = ongoingTransactionButton
-        setActiveButton(ongoingTransactionButton)
+        view.post {
+            replaceFragment(ongoingTransactionFragment)
+            currentButton = ongoingTransactionButton
+            setActiveButton(ongoingTransactionButton)
+        }
 
 
         ongoingTransactionButton.setOnClickListener {
@@ -36,6 +38,8 @@ class TransactionFragment : Fragment(R.layout.fragment_transaction) {
             replaceFragment(ongoingTransactionFragment)
             updateButtonState(ongoingTransactionButton)
         }
+
+
 
         sellingItemsButton.setOnClickListener {
             Log.e("Button Click", "Selling Items Button Clicked!")

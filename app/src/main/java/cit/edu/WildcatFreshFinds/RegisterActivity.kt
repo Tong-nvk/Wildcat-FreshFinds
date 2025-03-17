@@ -11,6 +11,7 @@ import cit.edu.WildcatFreshFinds.UserManager
 import android.util.Patterns
 import android.view.View
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -29,20 +30,29 @@ class RegisterActivity : AppCompatActivity() {
         val confirmPasswordField = findViewById<EditText>(R.id.confirm_password_input)
         val registerButton = findViewById<Button>(R.id.register_button)
         val loginButton = findViewById<TextView>(R.id.sign_in_click)
+        val commGuidelinesButton = findViewById<TextView>(R.id.tv_community_guidelines)
 
         registerButton.setOnClickListener {
             val fullName = fullNameField.text.toString();
             val email = emailField.text.toString();
             val password = passwordField.text.toString();
             val confirmPassword = confirmPasswordField.text.toString();
+            val checkBox = findViewById<CheckBox>(R.id.cb_community_guidelines)
+
 
             if(email.isBlank()) {
                 showToast("Email field is empty.")
                 return@setOnClickListener
             }
 
+
             if(!isValidEmail(email)) {
                 showToast("Email is invalid.")
+                return@setOnClickListener
+            }
+
+            if(!email.contains("@cit.edu")) {
+                showToast("Please use departmental email.")
                 return@setOnClickListener
             }
 
@@ -73,10 +83,16 @@ class RegisterActivity : AppCompatActivity() {
 
             }
 
+            if(!checkBox.isChecked) {
+                showToast("Please agree to the Community Guidelines")
+                return@setOnClickListener
+            }
             val resultMessage = UserManager.registerUser(fullName, email, password);
             showToast(resultMessage);
 
             println(UserManager.getUsers());
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
          }
 
         loginButton.setOnClickListener {
@@ -84,6 +100,14 @@ class RegisterActivity : AppCompatActivity() {
             showToast("Login");
 
             val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
+
+        commGuidelinesButton.setOnClickListener {
+            Log.e("Button Click", "Community Guidelines Navigation Button Clicked");
+            showToast("Community Guidelines");
+
+            val intent = Intent(this, CommunityGuidelinesActivity::class.java)
             startActivity(intent)
         }
     }

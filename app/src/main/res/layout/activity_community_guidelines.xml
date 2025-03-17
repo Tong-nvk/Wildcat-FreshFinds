@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+
+    tools:context=".CommunityGuidelinesActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background"
+        >
+
+    <!--START OF HEADER-->
+    <View
+        android:id="@+id/header"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:background="@color/maroon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    <TextView
+        android:id="@+id/header_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/anybody_black"
+        android:gravity="center"
+        android:text="Wildcat\nFreshFinds"
+        android:textColor="@color/gold"
+        android:textSize="30sp"
+        app:layout_constraintTop_toTopOf="@id/header"
+        app:layout_constraintBottom_toBottomOf="@id/header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/back_icon"
+
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+
+        app:layout_constraintStart_toStartOf="@id/header"
+        app:layout_constraintTop_toTopOf="@id/header"
+        app:layout_constraintBottom_toBottomOf="@id/header"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/back_icon"
+
+        />
+    <!--END OF HEADER-->
+
+
+<!--    START OF INTRO    -->
+        <TextView
+            android:id="@+id/label_community_guidelines"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintTop_toBottomOf="@id/header"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:fontFamily="@font/anybody_bold"
+            android:textColor="@color/maroon"
+            android:text="Community Guidelines"
+            />
+
+    <TextView
+        android:id="@+id/label_guidelines_intro"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintTop_toBottomOf="@id/label_community_guidelines"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:fontFamily="@font/anybody_bold"
+        android:textColor="@color/gold"
+        android:text="To maintain a safe and respectful marketplace for all students, we have established the following community guidelines. By using this platform, you agree to adhere to these rules. Any violations may result in disciplinary action by the Student Success Office of Cebu Institute of Technology - University (CIT-U)."
+        />
+    <View
+        android:id="@+id/line_seperator_1"
+
+        android:layout_width="0dp"
+        android:layout_height="5dp"
+
+        app:layout_constraintTop_toBottomOf="@id/label_guidelines_intro"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        android:background="@color/maroon"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+
+
+        />
+        <!--    END OF INTRO    -->
+
+        <TextView
+            android:id="@+id/label_title_1"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintTop_toBottomOf="@id/line_seperator_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="16sp"
+            android:fontFamily="@font/anybody_bold"
+            android:textColor="@color/maroon"
+
+            android:text="1. Respectful Conduct"
+            />
+
+        <TextView
+            android:id="@+id/label_desc_1"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintTop_toBottomOf="@id/label_title_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="14sp"
+            android:fontFamily="@font/anybody_bold"
+            android:textColor="@color/gold"
+
+            android:text="• Treat all users with respect and courtesy.\n• Harassment, hate speech, discrimination, or bullying will not be tolerated.\n• Do not use offensive or inappropriate language in messages, listings, or comments."
+            />
+
+        <TextView
+            android:id="@+id/label_title_2"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintTop_toBottomOf="@id/label_desc_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="16sp"
+            android:fontFamily="@font/anybody_bold"
+            android:textColor="@color/maroon"
+
+            android:text="2. Legitimate Transactions Only"
+            />
+
+        <TextView
+            android:id="@+id/label_desc_2"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintTop_toBottomOf="@id/label_title_2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="14sp"
+            android:fontFamily="@font/anybody_bold"
+            android:textColor="@color/gold"
+
+
+            android:text="• Only list second-hand items that comply with school policies and legal regulations.\n• Selling prohibited or illegal items (e.g., weapons, drugs, counterfeit goods) is strictly forbidden.\n• No fraudulent activities, such as scams, misleading listings, or fake accounts."
+            />
+
+        <TextView
+            android:id="@+id/label_title_3"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintTop_toBottomOf="@id/label_desc_2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="16sp"
+            android:fontFamily="@font/anybody_bold"
+            android:textColor="@color/maroon"
+
+            android:text="3. No Spamming or Misuse"
+            />
+
+        <TextView
+            android:id="@+id/label_desc_3"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintTop_toBottomOf="@id/label_title_3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="14sp"
+            android:fontFamily="@font/anybody_bold"
+            android:textColor="@color/gold"
+
+            android:text="• Avoid excessive self-promotion or spam.\n• Do not exploit the platform for non-marketplace purposes (e.g., political propaganda, irrelevant advertisements).\n• Creating multiple accounts to manipulate transactions is not allowed."
+            />
+        <TextView
+            android:id="@+id/label_title_4"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintTop_toBottomOf="@id/label_desc_3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="16sp"
+            android:fontFamily="@font/anybody_bold"
+            android:textColor="@color/maroon"
+
+            android:text="4. Respect Privacy and Security"
+            />
+
+        <TextView
+            android:id="@+id/label_desc_4"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintTop_toBottomOf="@id/label_title_4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="14sp"
+            android:fontFamily="@font/anybody_bold"
+            android:textColor="@color/gold"
+
+            android:text="• Do not share personal or sensitive information (yours or others’) publicly.\n• Transactions should be conducted responsibly, and users should meet in safe locations within the campus if necessary.\n• Unauthorized data collection, hacking, or misuse of personal information is strictly prohibited."
+            />
+        <TextView
+            android:id="@+id/label_title_5"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintTop_toBottomOf="@id/label_desc_4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="16sp"
+            android:fontFamily="@font/anybody_bold"
+            android:textColor="@color/maroon"
+
+            android:text="5. Follow School Policies"
+            />
+
+        <TextView
+            android:id="@+id/label_desc_5"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintTop_toBottomOf="@id/label_title_5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="14sp"
+            android:fontFamily="@font/anybody_bold"
+            android:textColor="@color/gold"
+
+            android:text="• Adhere to CIT-U’s student conduct policies while using the platform.\n• Selling or exchanging items that violate university rules is prohibited"
+            />
+
+        <View
+            android:id="@+id/line_seperator_2"
+
+            android:layout_width="0dp"
+            android:layout_height="5dp"
+
+            app:layout_constraintTop_toBottomOf="@id/label_desc_5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            android:background="@color/maroon"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+
+
+            />
+
+        <TextView
+            android:id="@+id/label_consequence"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintTop_toBottomOf="@id/line_seperator_2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="16sp"
+            android:fontFamily="@font/anybody_bold"
+            android:textColor="@color/maroon"
+
+            android:text="Consequences of Violations"
+            />
+
+        <TextView
+            android:id="@+id/label_desc_consequence"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintTop_toBottomOf="@id/label_consequence"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="14sp"
+            android:fontFamily="@font/anybody_bold"
+            android:textColor="@color/gold"
+
+            android:text="• Any failed transaction due to a user's fault may result in penalties or restrictions on future transactions.Failure to follow these guidelines may result in:"
+            />
+
+        <TextView
+            android:id="@+id/label_consequence_1"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintTop_toBottomOf="@id/label_desc_consequence"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="16sp"
+            android:fontFamily="@font/anybody_bold"
+            android:textColor="@color/maroon"
+
+            android:text="1. Warnings"
+            />
+
+        <TextView
+            android:id="@+id/label_desc_consequence_1"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintTop_toBottomOf="@id/label_consequence_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="14sp"
+            android:fontFamily="@font/anybody_bold"
+            android:textColor="@color/gold"
+
+            android:text="• First-time minor violations may result in a warning."
+            />
+
+        <TextView
+            android:id="@+id/label_consequence_2"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintTop_toBottomOf="@id/label_desc_consequence_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="16sp"
+            android:fontFamily="@font/anybody_bold"
+            android:textColor="@color/maroon"
+
+            android:text="2. Temporary Suspension"
+            />
+
+        <TextView
+            android:id="@+id/label_desc_consequence_2"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintTop_toBottomOf="@id/label_consequence_2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="14sp"
+            android:fontFamily="@font/anybody_bold"
+            android:textColor="@color/gold"
+
+            android:text="• Repeated or serious violations may lead to a temporary ban from the platform."
+            />
+
+
+        <TextView
+            android:id="@+id/label_consequence_3"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintTop_toBottomOf="@id/label_desc_consequence_2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="16sp"
+            android:fontFamily="@font/anybody_bold"
+            android:textColor="@color/maroon"
+
+            android:text="3. Permanent Ban"
+            />
+
+        <TextView
+            android:id="@+id/label_desc_consequence_3"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintTop_toBottomOf="@id/label_consequence_3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="14sp"
+            android:fontFamily="@font/anybody_bold"
+            android:textColor="@color/gold"
+
+            android:text="• Severe or repeated violations may result in a permanent ban from using the app."
+            />
+
+        <TextView
+            android:id="@+id/label_consequence_4"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintTop_toBottomOf="@id/label_desc_consequence_3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="16sp"
+            android:fontFamily="@font/anybody_bold"
+            android:textColor="@color/maroon"
+
+            android:text="4. School Disciplinary Actions"
+            />
+
+        <TextView
+            android:id="@+id/label_desc_consequence_4"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintTop_toBottomOf="@id/label_consequence_4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="14sp"
+            android:fontFamily="@font/anybody_bold"
+            android:textColor="@color/gold"
+
+            android:text="• Major offenses (e.g., scams, harassment, illegal sales) will be escalated to the Student Success Office, which may impose further disciplinary actions according to CIT-U’s student policies."
+            />
+
+        <View
+            android:id="@+id/line_seperator_3"
+
+            android:layout_width="0dp"
+            android:layout_height="5dp"
+
+            app:layout_constraintTop_toBottomOf="@id/label_desc_consequence_4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            android:background="@color/maroon"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+
+
+            />
+
+        <TextView
+            android:id="@+id/label_conclusion_1"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintTop_toBottomOf="@id/line_seperator_3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="14sp"
+            android:fontFamily="@font/anybody_bold"
+            android:textColor="@color/maroon"
+
+            android:text="By using this platform, you agree to comply with these guidelines. Let’s keep Wildcat FreshFinds a safe and trustworthy place for all students! If you encounter violations, report them immediately through the app’s support system."
+            />
+
+
+        <TextView
+            android:id="@+id/label_conclusion_2"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintTop_toBottomOf="@id/label_conclusion_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="14sp"
+            android:fontFamily="@font/anybody_bold"
+            android:textColor="@color/gold"
+
+            android:text="For any concerns, contact the Student Success Office at Cebu Institute of Technology - University."
+            />
+
+
+        <TextView
+            android:id="@+id/label_conclusion_3"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintTop_toBottomOf="@id/label_conclusion_2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="14sp"
+            android:fontFamily="@font/anybody_bold"
+            android:textColor="@color/maroon"
+
+            android:layout_marginBottom="50dp"
+            android:text="Thank you for your cooperation!"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

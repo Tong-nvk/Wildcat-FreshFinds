@@ -1,23 +1,25 @@
 package cit.edu.WildcatFreshFinds
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import cit.edu.WildcatFreshFinds.R
 
-class DevelopersActivity : AppCompatActivity() {
+class CommunityGuidelinesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_developers)
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
-                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN
+        setContentView(R.layout.activity_community_guidelines)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         val backButton = findViewById<ImageView>(R.id.back_icon)
         backButton.setOnClickListener {
@@ -28,7 +30,6 @@ class DevelopersActivity : AppCompatActivity() {
 
         }
     }
-
     private fun showToast(message: String)  {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }

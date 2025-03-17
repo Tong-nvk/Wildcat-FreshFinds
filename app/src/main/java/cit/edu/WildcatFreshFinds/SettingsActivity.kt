@@ -1,12 +1,18 @@
 package cit.edu.WildcatFreshFinds
 
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.media.Image
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.Window
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -27,8 +33,8 @@ class SettingsActivity : AppCompatActivity() {
             Log.e("Button Clicked", "Log Out Navigation Button Clicked")
             showToast("Log Out")
 
-//            val intent = Intent(this, SignOutActivity::class.java)
-//            startActivity(intent)
+            showCustomDialogBox()
+
         }
 
         val backButton = findViewById<ImageView>(R.id.back_icon)
@@ -44,11 +50,49 @@ class SettingsActivity : AppCompatActivity() {
             Log.e("Button Clicked", "Developer Button Navigation Button Clicked")
             showToast("Developer")
 
-//            val intent = Intent(this, DevelopersActivity::class.java)
-//            startActivity(intent)
+            val intent = Intent(this, DevelopersActivity::class.java)
+            startActivity(intent)
         }
+
+        val communityGuidelinesButton = findViewById<CardView>(R.id.community_guidelines_container)
+        communityGuidelinesButton.setOnClickListener {
+            Log.e("Button Clicked", "Community Guidelines Button Navigation Button Clicked")
+            showToast("Community Guidelines")
+
+            val intent = Intent(this, CommunityGuidelinesActivity::class.java)
+            startActivity(intent)
+        }
+
+
     }
 
+    fun showCustomDialogBox() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_sign_out)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val cancelButton = dialog.findViewById<Button>(R.id.cancel_button)
+        val logOutButton = dialog.findViewById<Button>(R.id.log_out_button)
+
+
+        logOutButton.setOnClickListener {
+            UserManager.signOut()
+
+            Log.e("Button Click", "Log Out Button Navigation Clicked")
+            showToast("Landing")
+            finish()
+            val intent = Intent(this, LandingActivity::class.java)
+            startActivity(intent)
+
+        }
+
+        cancelButton.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
     private fun showToast(message: String)  {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }

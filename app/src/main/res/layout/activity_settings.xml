@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
+    android:fitsSystemWindows="true"
+
     tools:context=".SettingsActivity">
 
         <View
@@ -47,6 +49,8 @@
             android:clickable="true"
             android:focusable="true"
             />
+
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/community_guidelines_container"
@@ -220,18 +224,18 @@
         android:id="@+id/settings_mascot"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:src="@drawable/settings_mascot"
-        android:scaleType="fitXY"
         android:paddingTop="30dp"
-        app:layout_constraintWidth_max="500dp"
-        app:layout_constraintHeight_max="500dp"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintTop_toBottomOf="@id/log_out_container"
+        android:scaleType="fitXY"
+        android:src="@drawable/settings_mascot"
         app:layout_constraintBottom_toTopOf="@id/message_container"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintHeight_max="400dp"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/log_out_container"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintWidth_max="400dp" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/message_container"
