@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="340dp"
+    android:layout_height="600dp"
+    android:id="@+id/dialog_container"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/container_bg"
+    app:cardCornerRadius="20dp"
+    android:fitsSystemWindows="true"
+
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardBackgroundColor="@color/container_bg"
+
+        >
+
+        <TextView
+            android:id="@+id/sell_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:elevation="11dp"
+
+            android:fontFamily="@font/anybody_bold"
+            android:gravity="center"
+            android:text="@string/edit"
+            android:textColor="@color/maroon"
+
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@id/product_img"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/name_label"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+
+            android:layout_marginTop="10dp"
+            android:elevation="11dp"
+            android:fontFamily="@font/anybody_bold"
+
+            android:gravity="center"
+            android:text="Product Name"
+
+            android:textColor="@color/maroon"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@id/et_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/product_img"
+
+            />
+
+        <EditText
+            android:id="@+id/et_name"
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp"
+
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/gold_input"
+
+            android:elevation="11dp"
+            android:fontFamily="@font/anybody_regular"
+            android:inputType="textEmailAddress"
+            android:padding="10dp"
+            android:textColor="@color/maroon"
+            android:textColorHint="@color/maroon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/name_label" />
+
+        <TextView
+            android:id="@+id/price_label"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+
+            android:layout_marginTop="10dp"
+            android:elevation="11dp"
+            android:fontFamily="@font/anybody_bold"
+
+            android:gravity="center"
+            android:text="Price"
+
+            android:textColor="@color/maroon"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@id/et_price"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_name"
+
+            />
+
+        <EditText
+            android:id="@+id/et_price"
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/gold_input"
+            android:elevation="11dp"
+
+            android:fontFamily="@font/anybody_regular"
+            android:inputType="numberDecimal"
+            android:padding="10dp"
+            android:textColor="@color/maroon"
+            android:textColorHint="@color/maroon"
+            app:layout_constraintBottom_toTopOf="@id/description_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/price_label" />
+
+        <TextView
+            android:id="@+id/description_label"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:elevation="11dp"
+            android:fontFamily="@font/anybody_bold"
+
+            android:gravity="center"
+            android:text="Description"
+
+            android:textColor="@color/maroon"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@id/et_description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_price"
+
+            />
+
+        <EditText
+            android:id="@+id/et_description"
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/gold_input"
+            android:elevation="11dp"
+
+            android:fontFamily="@font/anybody_regular"
+            android:inputType="text"
+            android:padding="10dp"
+            android:textColor="@color/maroon"
+            android:textColorHint="@color/maroon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/description_label" />
+        <Button
+            android:id="@+id/upload_btn"
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/maroon_button"
+            android:elevation="141dp"
+
+            android:text="UPLOAD IMG"
+            android:fontFamily="@font/anybody_black"
+            android:padding="10dp"
+            android:textColor="@color/gold"
+            android:textColorHint="@color/gold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/sell_button_container"
+            app:layout_constraintTop_toBottomOf="@id/et_description"  />
+
+        <FrameLayout
+            android:id="@+id/sell_button_container"
+
+            app:layout_constraintHorizontal_chainStyle="packed"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+
+            android:layout_marginTop="20dp"
+            android:elevation="12dp"
+            app:layout_constraintEnd_toStartOf="@id/cancel_button_container"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/upload_btn"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintWidth_max="120dp"
+            android:clickable="true"
+            android:focusable="true"
+
+            >
+
+            <Button
+                android:id="@+id/sell_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:background="@drawable/login_register_button"
+                android:fontFamily="@font/anybody_bold"
+                android:gravity="center"
+                android:text="@string/sell"
+
+                android:textColor="@color/container_bg"
+                android:textSize="19sp" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/cancel_button_container"
+
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:elevation="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/sell_button_container"
+            app:layout_constraintTop_toBottomOf="@+id/upload_btn"
+            android:layout_marginStart="10dp"
+            app:layout_constraintWidth_max="120dp">
+
+            <Button
+                android:id="@+id/cancel_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:background="@drawable/transparent_container_button"
+                android:fontFamily="@font/anybody_bold"
+                android:gravity="center"
+                android:text="@string/cancel"
+
+                android:textColor="@color/maroon"
+                android:textSize="19sp" />
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/product_img"
+
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:elevation="20dp"
+            android:src="@drawable/empty_img"
+
+            app:layout_constraintTop_toBottomOf="@id/sell_label"
+            app:layout_constraintBottom_toTopOf="@id/name_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
+

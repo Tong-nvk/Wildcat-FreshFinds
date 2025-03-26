@@ -15,6 +15,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+
+
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,7 +49,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             val intent = Intent(requireContext(), SettingsActivity::class.java)
             startActivity(intent)
         }
+        val sellContainer: CardView = view.findViewById(R.id.sell_container)
 
+        sellContainer.setOnClickListener {
+            showSellDialog()
+        }
 
     }
 
@@ -95,9 +106,70 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
         dialog.show()
     }
+
+    fun showSellDialog() {
+        val dialog = Dialog(requireContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_sell)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val cancelButton = dialog.findViewById<Button>(R.id.cancel_button)
+        val sellButton = dialog.findViewById<Button>(R.id.sell_button)
+        val sellButton2 = dialog.findViewById<FrameLayout>(R.id.sell_button_container)
+
+        val etName = dialog.findViewById<EditText>(R.id.et_name)
+        val etPrice = dialog.findViewById<EditText>(R.id.et_price)
+        val etDescription = dialog.findViewById<EditText>(R.id.et_description)
+
+
+        val db = FirebaseFirestore.getInstance()
+
+        sellButton.setOnClickListener {
+            val name = etName.text.toString().trim()
+            val priceText = etPrice.text.toString().trim()
+            val description = etDescription.text.toString().trim()
+
+            if (name.isEmpty() || priceText.isEmpty() || description.isEmpty()) {
+                showToast("Please fill in all fields!")
+                return@setOnClickListener
+            }
+
+            val price = priceText.toDoubleOrNull()
+            if (price == null) {
+                showToast("Invalid price format!")
+                return@setOnClickListener
+            }
+
+            val id = db.collection("products").document().id
+            val product = Product(
+                id = id,
+                name = name,
+                price = price,
+                description = description,
+                seller = UserManager.getSignedIn()?.fullName
+            )
+
+            db.collection("products").document(id)
+                .set(product)
+                .addOnSuccessListener {
+                    showToast("Product added successfully!")
+                    dialog.dismiss() // Close dialog after success
+                }
+                .addOnFailureListener { e ->
+                    showToast("Failed to add product: ${e.message}")
+                }
+        }
+
+        cancelButton.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+
     private fun showToast(message : String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
-
 
 }

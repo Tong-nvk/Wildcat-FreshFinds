@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("com.google.gms.google-services") // Apply Firebase Plugin
 }
 
 android {
@@ -38,6 +39,7 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -48,9 +50,7 @@ android {
         }
     }
 }
-
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -63,6 +63,22 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+
+    // Firebase BOM (Manages versions automatically)
+    implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
+
+    // Firebase Authentication
+    implementation("com.google.firebase:firebase-auth-ktx")
+
+    // Firebase Realtime Database
+    implementation("com.google.firebase:firebase-database-ktx")
+
+    // Firebase Firestore (remove manually specified version)
+    implementation("com.google.firebase:firebase-firestore-ktx")
+
+    // Firebase Storage (optional)
+    implementation("com.google.firebase:firebase-storage-ktx")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -71,8 +87,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    // sirkol images
+    // Circular images
     implementation("de.hdodenhof:circleimageview:3.1.0")
-
-
 }
+

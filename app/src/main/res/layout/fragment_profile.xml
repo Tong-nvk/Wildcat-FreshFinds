@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true"
+
+    tools:context=".ProfileFragment">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/pattern_bg"
     android:fitsSystemWindows="true"
 
-    tools:context=".ProfileFragment">
+ >
 
 
 
@@ -169,7 +177,7 @@
         app:cardBackgroundColor="@color/container_bg"
         app:cardCornerRadius="12dp"
         app:cardElevation="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/sell_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_container"
@@ -209,4 +217,53 @@
 
     </androidx.cardview.widget.CardView>
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/sell_container"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:background="@color/container_bg"
+        app:cardBackgroundColor="@color/container_bg"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_container"
+
+        android:clickable="true"
+        android:focusable="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/sell_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/sell_label"
+                android:src="@drawable/settings_icon"/>
+
+            <TextView
+                android:id="@+id/sell_label"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/sell_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/sell"
+                android:textColor="@color/gold"
+                android:fontFamily="@font/anybody_regular"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
