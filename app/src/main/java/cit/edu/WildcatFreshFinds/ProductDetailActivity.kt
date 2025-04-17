@@ -35,6 +35,7 @@ class ProductDetailActivity : AppCompatActivity() {
     private lateinit var decreaseQtyButton: Button
     private lateinit var increaseQtyButton: Button
     private lateinit var buyNowButton: Button
+    private lateinit var backButton: ImageView
 
     private var currentProduct: Product? = null
     private var selectedQuantity: Int = 1 // Default to buying 1
@@ -45,6 +46,7 @@ class ProductDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_product_detail) // Create this layout next
 
         // --- Find Views ---
+        backButton = findViewById(R.id.back_icon);
         productImageView = findViewById(R.id.detail_product_image)
         productNameTextView = findViewById(R.id.detail_product_name)
         productPriceTextView = findViewById(R.id.detail_product_price)
@@ -84,6 +86,9 @@ class ProductDetailActivity : AppCompatActivity() {
         }
         // --- End Populate UI ---
 
+        backButton.setOnClickListener {
+            finish()
+        }
 
         // --- Setup Buy Now Button ---
         buyNowButton.setOnClickListener {

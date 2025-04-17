@@ -59,7 +59,7 @@
                     android:inputType="textPersonName|textCapWords"
                     android:padding="10dp"
                     android:textColor="@color/maroon"
-                    android:textColorHint="@color/maroon_transparent"
+                    android:textColorHint="@color/maroon"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/first_name_label" />
@@ -73,7 +73,8 @@
                     android:layout_marginTop="10dp" android:elevation="11dp"
                     android:fontFamily="@font/anybody_bold"
                     android:gravity="center"
-                    android:text="Last Name" android:textColor="@color/maroon"
+                    android:text="Last Name"
+                    android:textColor="@color/maroon"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/et_first_name" />
@@ -91,7 +92,7 @@
                     android:inputType="textPersonName|textCapWords"
                     android:padding="10dp"
                     android:textColor="@color/maroon"
-                    android:textColorHint="@color/maroon_transparent"
+                    android:textColorHint="@color/maroon"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/last_name_label" />
@@ -108,22 +109,7 @@
                     android:textColor="@color/maroon"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/et_last_name" /> <EditText
-            android:id="@+id/et_password"
-            android:layout_width="0dp"
-            android:layout_height="46dp"
-            android:layout_marginStart="29dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="30dp"
-            android:background="@drawable/gold_input"
-            android:elevation="11dp"
-            android:fontFamily="@font/anybody_regular"
-            android:inputType="textPassword" android:padding="10dp"
-            android:textColor="@color/maroon"
-            android:textColorHint="@color/maroon_transparent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/password_label" />
+                    app:layout_constraintTop_toBottomOf="@id/et_last_name" />
 
                 <EditText
                     android:id="@+id/et_password"
