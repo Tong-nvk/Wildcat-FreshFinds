@@ -12,6 +12,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.Dispatchers
+import androidx.lifecycle.lifecycleScope
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,30 +29,36 @@ class LoginActivity : AppCompatActivity() {
         val loginButton = findViewById<Button>(R.id.login_button)
         val registerButton = findViewById<TextView>(R.id.sign_up_click)
 
+        UserManager.initialize(this) // Initialize UserManager!
+
         loginButton.setOnClickListener {
             val email = emailField.text.toString()
             val password = passwordField.text.toString()
 
-            if(email.isBlank()) {
+            if (email.isBlank()) {
                 showToast("Email field is empty.")
                 return@setOnClickListener
             }
 
-            if(password.isBlank()) {
+            if (password.isBlank()) {
                 showToast("Password field is empty.")
                 return@setOnClickListener
             }
 
-            if(!UserManager.loginUser(email, password)) {
-                showToast("Email and Password do not match.")
-                return@setOnClickListener
+            lifecycleScope.launch {
+                val loginSuccessful = UserManager.loginUser(email, password)
+                withContext(Dispatchers.Main) {
+                    if (loginSuccessful) {
+                        Log.e("Button Click", "Login Button Clicked")
+                        showToast("Login Successful!")
+
+                        val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        showToast("Email and Password do not match.")
+                    }
+                }
             }
-
-            Log.e("Button Click", "Login Button Clicked")
-            showToast("Login Successful!")
-
-            val intent = Intent(this, HomeActivity::class.java)
-            startActivity(intent)
         }
 
         registerButton.setOnClickListener {
@@ -60,7 +70,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun showToast(message : String) {
+    private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="340dp"
-    android:layout_height="600dp"
+    android:layout_height="700dp"
     android:id="@+id/dialog_container"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardBackgroundColor="@color/container_bg"
@@ -28,7 +28,7 @@
 
             android:fontFamily="@font/anybody_bold"
             android:gravity="center"
-            android:text="@string/edit"
+            android:text="@string/sell"
             android:textColor="@color/maroon"
 
             android:textSize="30sp"
@@ -166,6 +166,37 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/description_label" />
+        <TextView
+            android:id="@+id/quantity_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:elevation="11dp"
+            android:fontFamily="@font/anybody_bold"
+            android:gravity="center"
+            android:text="Quantity Available"
+            android:textColor="@color/maroon"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_description" /> <EditText
+        android:id="@+id/et_quantity"
+        android:layout_width="0dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/gold_input"
+        android:elevation="11dp"
+        android:fontFamily="@font/anybody_regular"
+        android:hint="e.g., 5"
+        android:inputType="number" android:padding="10dp"
+        android:textColor="@color/maroon"
+        android:textColorHint="@color/maroon" app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/quantity_label"
+        app:layout_constraintBottom_toTopOf="@id/upload_btn"/>
         <Button
             android:id="@+id/upload_btn"
             android:layout_width="0dp"
@@ -184,8 +215,8 @@
             android:textColorHint="@color/gold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/sell_button_container"
-            app:layout_constraintTop_toBottomOf="@id/et_description"  />
+            app:layout_constraintTop_toBottomOf="@id/et_quantity"
+            app:layout_constraintBottom_toTopOf="@id/sell_button_container"/>
 
         <FrameLayout
             android:id="@+id/sell_button_container"
@@ -229,7 +260,7 @@
             android:elevation="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/sell_button_container"
-            app:layout_constraintTop_toBottomOf="@+id/upload_btn"
+            app:layout_constraintTop_toBottomOf="@id/upload_btn"
             android:layout_marginStart="10dp"
             app:layout_constraintWidth_max="120dp">
 

@@ -8,8 +8,6 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class LandingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,8 +19,8 @@ class LandingActivity : AppCompatActivity() {
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN
 
 
-        val loginNavButton = findViewById<Button>(R.id.landing_login_button);
-        val registerNavButton = findViewById<Button>(R.id.landing_register_button);
+        val loginNavButton = findViewById<Button>(R.id.landing_login_button)
+        val registerNavButton = findViewById<Button>(R.id.landing_register_button)
 
         loginNavButton.setOnClickListener {
             Log.e("Button Click", "Login Navigation Button clicked")
@@ -37,7 +35,7 @@ class LandingActivity : AppCompatActivity() {
             Log.e("Button Click", "Register Navigation Button clicked")
             Toast.makeText(this, "Register", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent);
+            startActivity(intent)
         }
     }
 }

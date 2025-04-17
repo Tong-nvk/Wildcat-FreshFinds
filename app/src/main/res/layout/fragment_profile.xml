@@ -18,8 +18,6 @@
 
  >
 
-
-
     <androidx.cardview.widget.CardView
         android:id="@+id/profile_container"
         android:layout_width="0dp"

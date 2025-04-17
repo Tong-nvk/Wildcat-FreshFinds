@@ -34,6 +34,7 @@
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
+
         <activity
             android:name=".LandingActivity"
             android:exported="true">
@@ -43,6 +44,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ProductDetailActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

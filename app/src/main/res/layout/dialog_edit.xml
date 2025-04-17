@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="340dp"
-    android:layout_height="380dp"
+    android:layout_height="450dp"
     android:id="@+id/dialog_container"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardBackgroundColor="@color/container_bg"
@@ -24,85 +24,106 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:elevation="11dp"
-
                     android:fontFamily="@font/anybody_bold"
                     android:gravity="center"
                     android:text="@string/edit"
                     android:textColor="@color/maroon"
-
                     android:textSize="30sp"
-                    app:layout_constraintBottom_toTopOf="@id/name_label"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_chainStyle="packed" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/name_label"
-
+                    android:id="@+id/first_name_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
-
-                    android:layout_marginTop="10dp"
-                    android:elevation="11dp"
+                    android:layout_marginTop="20dp" android:elevation="11dp"
                     android:fontFamily="@font/anybody_bold"
-
                     android:gravity="center"
-                    android:text="@string/full_name"
-
-                    android:textColor="@color/maroon"
+                    android:text="First Name" android:textColor="@color/maroon"
                     android:textSize="20sp"
-                    app:layout_constraintBottom_toTopOf="@id/et_name"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/edit_label"
-
-                    />
+                    app:layout_constraintTop_toBottomOf="@id/edit_label" />
 
                 <EditText
-                    android:id="@+id/et_name"
+                    android:id="@+id/et_first_name"
                     android:layout_width="0dp"
                     android:layout_height="46dp"
-
                     android:layout_marginStart="29dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="30dp"
-
-                    android:layout_marginBottom="20dp"
                     android:background="@drawable/gold_input"
-
                     android:elevation="11dp"
                     android:fontFamily="@font/anybody_regular"
-                    android:inputType="textEmailAddress"
+                    android:inputType="textPersonName|textCapWords"
                     android:padding="10dp"
                     android:textColor="@color/maroon"
-                    android:textColorHint="@color/maroon"
+                    android:textColorHint="@color/maroon_transparent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/name_label" />
+                    app:layout_constraintTop_toBottomOf="@id/first_name_label" />
+
+
+                <TextView
+                    android:id="@+id/last_name_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="10dp" android:elevation="11dp"
+                    android:fontFamily="@font/anybody_bold"
+                    android:gravity="center"
+                    android:text="Last Name" android:textColor="@color/maroon"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/et_first_name" />
+
+                <EditText
+                    android:id="@+id/et_last_name"
+                    android:layout_width="0dp"
+                    android:layout_height="46dp"
+                    android:layout_marginStart="29dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="30dp"
+                    android:background="@drawable/gold_input"
+                    android:elevation="11dp"
+                    android:fontFamily="@font/anybody_regular"
+                    android:inputType="textPersonName|textCapWords"
+                    android:padding="10dp"
+                    android:textColor="@color/maroon"
+                    android:textColorHint="@color/maroon_transparent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/last_name_label" />
 
                 <TextView
                     android:id="@+id/password_label"
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
-
-                    android:layout_marginTop="10dp"
-                    android:elevation="11dp"
+                    android:layout_marginTop="10dp" android:elevation="11dp"
                     android:fontFamily="@font/anybody_bold"
-
                     android:gravity="center"
                     android:text="@string/password"
-
                     android:textColor="@color/maroon"
                     android:textSize="20sp"
-                    app:layout_constraintBottom_toTopOf="@id/et_password"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/et_name"
-
-                    />
+                    app:layout_constraintTop_toBottomOf="@id/et_last_name" /> <EditText
+            android:id="@+id/et_password"
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/gold_input"
+            android:elevation="11dp"
+            android:fontFamily="@font/anybody_regular"
+            android:inputType="textPassword" android:padding="10dp"
+            android:textColor="@color/maroon"
+            android:textColorHint="@color/maroon_transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/password_label" />
 
                 <EditText
                     android:id="@+id/et_password"
