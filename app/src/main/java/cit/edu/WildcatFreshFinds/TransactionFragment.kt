@@ -20,40 +20,58 @@ class TransactionFragment : Fragment(R.layout.fragment_transaction) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.d("TransactionFragment", "onViewCreated called.")
+
         ongoingTransactionButton = view.findViewById(R.id.ongoing_transaction_button)
         sellingItemsButton = view.findViewById(R.id.selling_items)
 
-
-        view.post {
+        if (savedInstanceState == null) {
+            Log.d("TransactionFragment", "savedInstanceState is null, loading default fragment.")
             replaceFragment(ongoingTransactionFragment)
             currentButton = ongoingTransactionButton
             setActiveButton(ongoingTransactionButton)
+            if (::sellingItemsButton.isInitialized) {
+                setInactiveButton(sellingItemsButton)
+            }
+        } else {
+            Log.d("TransactionFragment", "savedInstanceState is NOT null, FragmentManager should restore.")
+            currentButton = childFragmentManager.findFragmentById(R.id.transaction_fragment_container)?.let {
+                if (it is OngoingTransactionFragment) ongoingTransactionButton else if (it is SellingItemsFragment) sellingItemsButton else null
+            }
+            currentButton?.let { setActiveButton(it) } // Try to restore visual state
         }
 
 
         ongoingTransactionButton.setOnClickListener {
-            Log.e("Button Click", "Ongoing Transaction Button Clicked!")
-            showToast("Ongoing Transactions")
-
-            replaceFragment(ongoingTransactionFragment)
-            updateButtonState(ongoingTransactionButton)
+            if (currentButton != ongoingTransactionButton) {
+                Log.d("TransactionFragment", "Ongoing Transaction Button Clicked!")
+                replaceFragment(ongoingTransactionFragment)
+                updateButtonState(ongoingTransactionButton)
+            } else {
+                Log.d("TransactionFragment", "Ongoing Transaction Button Clicked (Already Active).")
+            }
         }
 
-
-
         sellingItemsButton.setOnClickListener {
-            Log.e("Button Click", "Selling Items Button Clicked!")
-            showToast("Selling Items")
-
-            replaceFragment(sellingItemsFragment)
-            updateButtonState(sellingItemsButton)
+            if (currentButton != sellingItemsButton) {
+                Log.d("TransactionFragment", "Selling Items Button Clicked!")
+                replaceFragment(sellingItemsFragment)
+                updateButtonState(sellingItemsButton)
+            } else {
+                Log.d("TransactionFragment", "Selling Items Button Clicked (Already Active).")
+            }
         }
     }
 
     private fun updateButtonState(newActiveButton: Button) {
-        currentButton?.let { setInactiveButton(it) }
+        currentButton?.let {
+            if(::ongoingTransactionButton.isInitialized && ::sellingItemsButton.isInitialized) { // Check initialization
+                setInactiveButton(it)
+            }
+        }
         setActiveButton(newActiveButton)
         currentButton = newActiveButton
+        Log.d("TransactionFragment", "Updated button state, active: ${newActiveButton.id}")
     }
 
     private fun setActiveButton(button: Button) {
@@ -67,9 +85,10 @@ class TransactionFragment : Fragment(R.layout.fragment_transaction) {
     }
 
     private fun replaceFragment(fragment: Fragment) {
-        parentFragmentManager.beginTransaction().apply {
-            replace(R.id.transaction_fragment_container, fragment)
+        childFragmentManager.beginTransaction().apply {
+            replace(R.id.transaction_fragment_container, fragment) // Ensure this ID exists in fragment_transaction.xml
             commit()
+            Log.d("TransactionFragment", "Replacing fragment with ${fragment::class.java.simpleName}")
         }
     }
 

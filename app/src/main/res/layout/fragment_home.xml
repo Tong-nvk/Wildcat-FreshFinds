@@ -78,62 +78,23 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/welcome_text"
-            app:layout_constraintWidth_max="350dp" />
-
-        <Button
-            android:id="@+id/all_category_button"
-            android:layout_width="85dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/category_active"
-            android:fontFamily="@font/anybody_bold"
-            android:text="@string/all"
-            android:textColor="@color/gold"
-            app:layout_constraintEnd_toStartOf="@id/uniform_category_button"
-            app:layout_constraintStart_toStartOf="@id/search_input"
-            app:layout_constraintTop_toBottomOf="@id/search_input" />
-
-
-        <Button
-            android:id="@+id/uniform_category_button"
-            android:layout_width="85dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/category_inactive"
-            android:fontFamily="@font/anybody_bold"
-            android:text="@string/uniform"
-            android:textColor="@color/maroon"
-            app:layout_constraintEnd_toStartOf="@id/book_category_button"
-            app:layout_constraintStart_toEndOf="@+id/all_category_button"
-            app:layout_constraintTop_toBottomOf="@id/search_input" />
-
-
-        <Button
-            android:id="@+id/book_category_button"
-            android:layout_width="85dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/category_inactive"
-            android:fontFamily="@font/anybody_bold"
-            android:text="@string/book"
-            android:textColor="@color/maroon"
-            app:layout_constraintEnd_toEndOf="@id/search_input"
-            app:layout_constraintStart_toEndOf="@id/uniform_category_button"
-            app:layout_constraintTop_toBottomOf="@id/search_input" />
+            app:layout_constraintWidth_max="350dp"
+            />
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/product_recycler_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="10dp"
             android:clipToPadding="false"
             android:paddingBottom="16dp"
-            android:visibility="gone" app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/search_input"
             app:layout_constraintStart_toStartOf="@id/search_input"
-            app:layout_constraintTop_toBottomOf="@id/uniform_category_button"
+            app:layout_constraintTop_toBottomOf="@+id/search_input"
             tools:listitem="@layout/item_product"
             tools:visibility="visible" /> <androidx.constraintlayout.widget.Group
         android:id="@+id/group_nothing_here"
@@ -149,8 +110,10 @@
             app:layout_constraintBottom_toTopOf="@id/nothing_here_txt"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/uniform_category_button"
-            app:layout_constraintVertical_bias="0.3" /> <TextView
+            app:layout_constraintTop_toBottomOf="@+id/search_input"
+            app:layout_constraintVertical_chainStyle="packed"
+             />
+        <TextView
         android:id="@+id/nothing_here_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

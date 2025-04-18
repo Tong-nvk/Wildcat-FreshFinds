@@ -1,27 +1,36 @@
 package cit.edu.WildcatFreshFinds
 
-import androidx.lifecycle.LiveData // <-- Import LiveData
+import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
 interface ProductDao {
-    @Query("SELECT * FROM products ORDER BY name ASC") // Example ordering
-    fun getAllProducts(): LiveData<List<Product>> // <-- Return LiveData
+    @Query("SELECT * FROM products ORDER BY name ASC")
+    fun getAllProducts(): LiveData<List<Product>>
 
-    // Keep other methods as they are (findById, insert, update, delete)
+    @Query("SELECT * FROM products WHERE name LIKE :searchQuery OR description LIKE :searchQuery ORDER BY name ASC")
+    fun searchProducts(searchQuery: String): LiveData<List<Product>>
+
+
+    @Query("SELECT id FROM products LIMIT 1")
+    suspend fun getAnySingleProductId(): String?
+
+    @Query("DELETE FROM products WHERE id = :productId")
+    suspend fun deleteProductById(productId: String): Int
+
+    @Query("DELETE FROM products")
+    suspend fun deleteAllProducts()
+
     @Query("SELECT * FROM products WHERE id = :id")
-    fun findById(id: String): Product? // This can stay synchronous if needed
+    fun findById(id: String): Product?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(product: Product)
 
     @Update
-    suspend fun update(product: Product) // Recommend suspend
+    suspend fun update(product: Product)
 
     @Delete
-    suspend fun delete(product: Product) // Recommend suspend
-
-    // --- Add this method ---
-    @Query("DELETE FROM products") // SQL to delete all rows
-    suspend fun deleteAllProducts()
+    suspend fun delete(product: Product)
+    // --- End Keep ---
 }

@@ -38,27 +38,21 @@ class RegisterActivity : AppCompatActivity() {
         try {
             UserManager.initialize(this)
         } catch (e: IllegalStateException) {
-            // Handle cases where initialization might fail or context is invalid, though unlikely here
             Log.e("RegisterActivity", "UserManager initialization failed potentially.", e)
             showToast("Initialization error. Please restart the app.")
-            // Potentially finish the activity or disable the button
             registerButton.isEnabled = false
-            return // Exit onCreate early if initialization fails critically
+            return
         }
 
         registerButton.setOnClickListener {
-            // --- Get Input Text ---
-            // val fullName = fullNameField.text.toString().trim() // <-- Remove this
-            val firstName = firstNameField.text.toString().trim() // <-- Add this
-            val lastName = lastNameField.text.toString().trim()   // <-- Add this
-            val email = emailField.text.toString().trim()         // <-- Add trim()
-            val password = passwordField.text.toString()        // No trim for password
-            val confirmPassword = confirmPasswordField.text.toString() // No trim for password
-            // val checkBox = findViewById<CheckBox>(R.id.cb_community_guidelines) // Already found above
-            // --- End Get Input Text ---
+
+            val firstName = firstNameField.text.toString().trim()
+            val lastName = lastNameField.text.toString().trim()
+            val email = emailField.text.toString().trim()
+            val password = passwordField.text.toString()
+            val confirmPassword = confirmPasswordField.text.toString()
 
 
-            // --- Validation ---
             if (email.isBlank()) {
                 showToast("Email field is empty.")
                 return@setOnClickListener
@@ -71,7 +65,6 @@ class RegisterActivity : AppCompatActivity() {
                 showToast("Please use departmental email.")
                 return@setOnClickListener
             }
-            // Replace full name check with first/last name checks
             if (firstName.isBlank()) {
                 showToast("First Name field is empty.")
                 return@setOnClickListener
@@ -80,7 +73,6 @@ class RegisterActivity : AppCompatActivity() {
                 showToast("Last Name field is empty.")
                 return@setOnClickListener
             }
-            // Keep password checks
             if (password.isBlank()) {
                 showToast("Password field is empty.")
                 return@setOnClickListener
@@ -101,31 +93,23 @@ class RegisterActivity : AppCompatActivity() {
                 showToast("Please agree to the Community Guidelines")
                 return@setOnClickListener
             }
-            // --- End Validation ---
 
 
-            // --- Call Register User ---
             lifecycleScope.launch {
-                // Call updated UserManager function
                 val resultMessage = UserManager.registerUser(firstName, lastName, email, password) // <-- Pass separate names
 
-                // Use main thread for UI updates like Toast
                 withContext(Dispatchers.Main) {
                     showToast(resultMessage)
-                    // Only navigate if registration was truly successful
                     if (resultMessage == "Registration Successful!") {
                         Log.d("RegisterActivity", "Registration success for $email. Navigating to Login.")
                         val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
-                        // Optional: Add flags to clear previous activities if needed
-                        // intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
                         startActivity(intent)
-                        // finish() // Optional: finish RegisterActivity so user can't go back
                     } else {
                         Log.w("RegisterActivity", "Registration failed/user exists for $email. Message: $resultMessage")
                     }
                 }
 
-                // Logging users is fine for debug, keep it if needed
                 try {
                     val users = withContext(Dispatchers.IO) { UserManager.getUsers() }
                     Log.d("RegisterActivity", "Current Users in DB: $users")
@@ -133,32 +117,25 @@ class RegisterActivity : AppCompatActivity() {
                     Log.e("RegisterActivity", "Error fetching users after registration", e)
                 }
             }
-            // --- End Call Register User ---
-        } // End registerButton listener
+        }
 
 
-        // --- Keep other listeners ---
         loginButton.setOnClickListener {
-            Log.d("RegisterActivity", "Login Navigation Button Clicked") // Use Log.d or Log.i for navigation
-            // showToast("Login") // Toast is optional if navigating immediately
+            Log.d("RegisterActivity", "Login Navigation Button Clicked")
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
 
         commGuidelinesButton.setOnClickListener {
             Log.d("RegisterActivity", "Community Guidelines Navigation Button Clicked")
-            // showToast("Community Guidelines")
             val intent = Intent(this, CommunityGuidelinesActivity::class.java)
             startActivity(intent)
         }
-        // --- End other listeners ---
 
-    } // End onCreate
+    }
 
 
-    // --- Keep helper functions ---
     private fun isValidEmail(email: String): Boolean {
-        // Consider adding trim() here as well for safety, though done above now
         return email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
@@ -169,6 +146,5 @@ class RegisterActivity : AppCompatActivity() {
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
-    // --- End helper functions ---
 
 }

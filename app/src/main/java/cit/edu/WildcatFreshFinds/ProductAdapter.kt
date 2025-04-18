@@ -1,7 +1,6 @@
 
 package cit.edu.WildcatFreshFinds // Use your package name
 
-import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -33,32 +32,30 @@ class ProductAdapter : ListAdapter<Product, ProductAdapter.ProductViewHolder>(Pr
         holder.bind(product)
     }
 
-    // --- Modified ProductViewHolder ---
     inner class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val imageView: ImageView = itemView.findViewById(R.id.product_item_image)
         private val nameTextView: TextView = itemView.findViewById(R.id.product_item_name)
         private val priceTextView: TextView = itemView.findViewById(R.id.product_item_price)
         private val sellerTextView: TextView = itemView.findViewById(R.id.product_item_seller)
 
-        // --- Set Listener in init block ---
         init {
             itemView.setOnClickListener {
-                val position = bindingAdapterPosition // <-- Access directly here
-                if (position != RecyclerView.NO_POSITION) { // Check for valid position
+                val position = bindingAdapterPosition // Assuming this is resolved now
+                if (position != RecyclerView.NO_POSITION) {
                     val clickedProduct = getItem(position)
-                    onItemClickListener?.invoke(clickedProduct) // Invoke listener lambda
+                    onItemClickListener?.invoke(clickedProduct)
                 }
             }
         }
-        // --- End init block ---
 
         fun bind(product: Product) {
             nameTextView.text = product.name ?: "N/A"
             val format: NumberFormat = NumberFormat.getCurrencyInstance(Locale("en", "PH"))
             priceTextView.text = product.price?.let { format.format(it) } ?: "N/A"
-            sellerTextView.text = product.seller ?: "Unknown"
 
-            // --- Image Loading Block --- (Keep this as corrected before)
+            sellerTextView.text = " ${product.sellerEmail ?: "Unknown"}"
+
+
             Log.d("ProductAdapter", "Binding item: ${product.name}, ImageUrl is Path: ${product.imageUrl}")
             product.imageUrl?.let { filePath ->
                 val imageFile = File(filePath)
@@ -84,17 +81,12 @@ class ProductAdapter : ListAdapter<Product, ProductAdapter.ProductViewHolder>(Pr
                 Log.w("ProductAdapter", "ImageUrl (file path) is NULL for product: ${product.name}")
                 Glide.with(itemView.context).load(R.drawable.empty_img).centerCrop().into(imageView)
             }
-            // --- End Image Loading Block ---
-
-            // --- REMOVE setOnClickListener from here ---
-            // itemView.setOnClickListener { ... }
         }
     }
-    // --- End Modified ProductViewHolder ---
 }
 
 
-// DiffUtil helps ListAdapter determine changes efficiently
+
 class ProductDiffCallback : DiffUtil.ItemCallback<Product>() {
     override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
         return oldItem.id == newItem.id // Compare by unique ID

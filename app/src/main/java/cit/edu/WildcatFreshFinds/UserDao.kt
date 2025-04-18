@@ -18,4 +18,6 @@ interface UserDao {
 
     @Delete
     fun delete(user: User)
+    @Query("UPDATE users SET unsuccessfulTransactionCount = unsuccessfulTransactionCount + 1 WHERE email = :email")
+    suspend fun incrementUnsuccessfulCount(email: String): Int
 }

@@ -5,23 +5,22 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.net.Uri // <-- Import Uri
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.Button
 import android.widget.EditText
-import android.widget.FrameLayout
-import android.widget.ImageView // <-- Import ImageView
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher // <-- Import
-import androidx.activity.result.contract.ActivityResultContracts // <-- Import
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.bumptech.glide.Glide // <-- Import Glide
+import com.bumptech.glide.Glide
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -35,36 +34,29 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private lateinit var userNameTextView: TextView
     private lateinit var emailTextView: TextView
 
-    // --- Additions for Image Handling ---
     private lateinit var imagePickerLauncher: ActivityResultLauncher<String>
     private var currentDialogImageUri: Uri? = null
     private var currentDialogImageView: ImageView? = null // To hold reference to dialog's ImageView
-    // --- End Additions ---
     private var currentDialogImageFilePath: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // --- Initialize ActivityResultLauncher ---
         imagePickerLauncher = registerForActivityResult(
             ActivityResultContracts.GetContent()
         ) { uri: Uri? ->
             if (uri != null) {
                 Log.d("ProfileFragment", "Image selected: $uri")
-                // --- Don't just store the URI ---
-                // currentDialogImageUri = uri
 
-                // --- Copy image to internal storage in background ---
-                viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) { // Use IO dispatcher
+                viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
                     val filePath = copyImageToInternalStorage(requireContext(), uri)
-                    withContext(Dispatchers.Main) { // Switch back to main thread for UI updates
+                    withContext(Dispatchers.Main) {
                         if (filePath != null) {
-                            currentDialogImageFilePath = filePath // <-- Store the FILE PATH
+                            currentDialogImageFilePath = filePath
                             Log.d("ProfileFragment", "Stored file path: $currentDialogImageFilePath")
 
-                            // Update the ImageView preview using the new file path
                             currentDialogImageView?.let { imageView ->
-                                Glide.with(this@ProfileFragment) // Use fragment context
-                                    .load(filePath) // Load from file path
+                                Glide.with(this@ProfileFragment)
+                                    .load(filePath)
                                     .placeholder(R.drawable.empty_img)
                                     .error(R.drawable.empty_img)
                                     .centerCrop()
@@ -74,8 +66,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                         } else {
                             Log.e("ProfileFragment", "Failed to copy image to internal storage.")
                             showToast("Failed to process selected image.")
-                            currentDialogImageFilePath = null // Ensure it's null on failure
-                            // Optionally reset the preview to placeholder
+                            currentDialogImageFilePath = null
                             currentDialogImageView?.let { Glide.with(this@ProfileFragment).load(R.drawable.empty_img).into(it) }
                         }
                     }
@@ -83,7 +74,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
             } else {
                 Log.d("ProfileFragment", "Image selection cancelled")
-                currentDialogImageFilePath = null // Reset if cancelled
+                currentDialogImageFilePath = null
             }
         }
     }
@@ -158,18 +149,15 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
-        // --- Make sure this layout uses the updated XML ---
         dialog.setContentView(R.layout.dialog_edit)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         val cancelButton = dialog.findViewById<Button>(R.id.cancel_button)
         val editDialogButton = dialog.findViewById<Button>(R.id.edit_button)
 
-        // --- Find NEW EditTexts ---
-        val etFirstName = dialog.findViewById<EditText>(R.id.et_first_name) // Use new ID
-        val etLastName = dialog.findViewById<EditText>(R.id.et_last_name)   // Use new ID
+        val etFirstName = dialog.findViewById<EditText>(R.id.et_first_name)
+        val etLastName = dialog.findViewById<EditText>(R.id.et_last_name)
         val etPassword = dialog.findViewById<EditText>(R.id.et_password)
-        // --- End Find ---
 
         // Check if views exist (crucial after layout change)
         if (etFirstName == null || etLastName == null || etPassword == null) {
@@ -179,7 +167,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
 
 
-        // Populate fields
         viewLifecycleOwner.lifecycleScope.launch {
             try {
                 val signedInUser = withContext(Dispatchers.IO) { UserManager.getSignedIn() }
@@ -205,17 +192,14 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
 
         editDialogButton.setOnClickListener {
-            // --- Get text from NEW fields ---
             val firstName = etFirstName.text.toString().trim()
             val lastName = etLastName.text.toString().trim()
-            val password = etPassword.text.toString() // No trim
+            val password = etPassword.text.toString()
 
-            // --- Updated validation ---
             if (firstName.isBlank() || lastName.isBlank() || password.isBlank()) {
                 showToast("All fields are required.")
                 return@setOnClickListener
             }
-            // Add specific password validation if needed (e.g., length)
             if (password.length < 8) {
                 showToast("Password must be at least 8 characters.")
                 return@setOnClickListener
@@ -223,11 +207,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
             // Check if data changed before calling editUser
             viewLifecycleOwner.lifecycleScope.launch {
-                var dataChanged = true // Optimistic default
+                var dataChanged = true
                 try {
                     val signedInUser = withContext(Dispatchers.IO) { UserManager.getSignedIn() } // Get fresh data
                     if (signedInUser != null) {
-                        // --- Compare individual fields ---
                         if (firstName == signedInUser.firstName &&
                             lastName == signedInUser.lastName &&
                             password == signedInUser.password) {
@@ -246,16 +229,14 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
                 if (dataChanged) {
                     Log.d("ProfileFragment", "Edit Button Clicked, data changed. Proceeding with edit.")
-                    // Launch another coroutine for the actual edit operation
-                    launch { // Inherits lifecycleScope
+                    launch {
                         try {
-                            // --- Call updated UserManager.editUser ---
                             val success = UserManager.editUser(firstName, lastName, password)
                             withContext(Dispatchers.Main) {
                                 if (success) {
                                     showToast("Edit Successful!")
                                     dialog.dismiss()
-                                    updateUI() // Refresh profile display on success
+                                    updateUI()
                                 } else {
                                     showToast("Edit failed. User not found or no changes needed?")
                                 }
@@ -269,11 +250,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     }
                 } else {
                     Log.d("ProfileFragment", "Edit Button Clicked, but data not changed or error occurred.")
-                    // Decide if dialog should dismiss even if no changes:
-                    // dialog.dismiss()
                 }
-            } // End outer launch scope for checking data
-        } // End editDialogButton listener
+            }
+        }
 
         cancelButton.setOnClickListener {
             dialog.dismiss()
@@ -284,12 +263,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private fun copyImageToInternalStorage(context: Context, uri: Uri): String? {
         var newFilePath: String? = null
         try {
-            // Create an images directory if it doesn't exist
             val imageDir = File(context.filesDir, "images")
             if (!imageDir.exists()) {
                 imageDir.mkdirs()
             }
-            // Create a unique file name
             val fileName = "product_${System.currentTimeMillis()}.jpg"
             val destinationFile = File(imageDir, fileName)
 
@@ -307,8 +284,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             }
         } catch (e: IOException) {
             Log.e("ProfileFragment", "Error copying image", e)
-            // Optionally show a toast or handle the error
-            // showToast("Error processing image.") // Careful with context here if in background
         }
         return newFilePath
     }
@@ -319,10 +294,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         dialog.setContentView(R.layout.dialog_sell) // Your dialog layout
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        // --- Find Views in Dialog ---
         val cancelButton = dialog.findViewById<Button>(R.id.cancel_button)
         val sellButton = dialog.findViewById<Button>(R.id.sell_button)
-        // val sellButton2 = dialog.findViewById<FrameLayout>(R.id.sell_button_container) // Already have sellButton
 
         val etName = dialog.findViewById<EditText>(R.id.et_name)
         val etPrice = dialog.findViewById<EditText>(R.id.et_price)
@@ -330,49 +303,41 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         val uploadButton = dialog.findViewById<Button>(R.id.upload_btn) // Find upload button
         val etQuantity = dialog.findViewById<EditText>(R.id.et_quantity) // <-- Find quantity EditText
         val productImageView = dialog.findViewById<ImageView>(R.id.product_img) // Find ImageView
-        // --- End Find Views ---
 
-        // --- Reset state for new dialog instance ---
-        currentDialogImageFilePath = null // <-- Reset the file path variable too!
-        currentDialogImageView = productImageView // Store reference to this dialog's ImageView        // Load placeholder initially
+        currentDialogImageFilePath = null
+        currentDialogImageView = productImageView
         Glide.with(this)
-            .load(R.drawable.empty_img) // Your placeholder
+            .load(R.drawable.empty_img)
             .centerCrop()
             .into(productImageView)
-        // Clear the reference when the dialog is dismissed
         dialog.setOnDismissListener {
             currentDialogImageView = null
             Log.d("ProfileFragment", "Sell dialog dismissed, ImageView reference cleared.")
         }
-        // --- End Reset state ---
 
 
-        // --- Setup Upload Button ---
         uploadButton.setOnClickListener {
             imagePickerLauncher.launch("image/*")
         }
-        // --- End Setup Upload Button ---
 
 
-        // --- Setup Sell Button ---
         sellButton.setOnClickListener {
             val name = etName.text.toString().trim()
             val priceText = etPrice.text.toString().trim()
             val description = etDescription.text.toString().trim()
             val quantityText = etQuantity.text.toString().trim() // <-- Get quantity text
 
-            // --- Validation ---
             if (name.isEmpty() || priceText.isEmpty() || description.isEmpty() || quantityText.isEmpty()) { // <-- Check quantityText
                 showToast("Please fill in all product details!")
                 return@setOnClickListener
             }
             val price = priceText.toDoubleOrNull()
-            val quantity = quantityText.toIntOrNull() // <-- Parse quantity to Int
+            val quantity = quantityText.toIntOrNull()
             if (price == null || price <= 0) {
                 showToast("Invalid price format!")
                 return@setOnClickListener
             }
-            if (quantity == null || quantity <= 0) { // <-- Validate quantity
+            if (quantity == null || quantity <= 0) {
                 showToast("Please enter a valid quantity (must be 1 or more)!")
                 return@setOnClickListener
             }
@@ -380,7 +345,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 showToast("Please upload and process a product image!")
                 return@setOnClickListener
             }
-            // --- End Validation ---
 
             if (currentDialogImageFilePath == null) { // <-- Check file path now
                 showToast("Please upload and process a product image!")
@@ -389,9 +353,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             viewLifecycleOwner.lifecycleScope.launch {
                 runCatching {
                     val signedInUser = withContext(Dispatchers.IO) { UserManager.getSignedIn() }
-                    val sellerName = signedInUser?.let {
-                        "${it.firstName ?: ""} ${it.lastName ?: ""}".trim()
-                    } ?: "Unknown Seller"
+                    val sellerEmail = signedInUser?.email
                     val id = UUID.randomUUID().toString()
                     val imagePathString = currentDialogImageFilePath ?: run {
                         Log.e("ProfileFragment", "Image path null after validation!")
@@ -399,7 +361,15 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                         return@runCatching
                     }
 
-                    val product = Product( id, name, price, description, imagePathString, sellerName, quantity)
+                    val product = Product(
+                        id = id,
+                        name = name,
+                        price = price,
+                        description = description,
+                        imageUrl = imagePathString,
+                        sellerEmail = sellerEmail,
+                        quantity = quantity
+                    )
                     Log.d("ProfileFragment", "Saving Product: $product")
 
                     withContext(Dispatchers.IO) {
@@ -418,8 +388,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     }
                 }
             }
-        } // End of sellButton.setOnClickListener
-        // --- End Setup Sell Button ---
+        }
+
 
         cancelButton.setOnClickListener {
             dialog.dismiss()
@@ -434,7 +404,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
 
     private fun clearAllProductsData() {
-        // Use the appropriate scope (lifecycleScope for Fragments/Activities, viewModelScope for ViewModels)
         lifecycleScope.launch { // Use lifecycleScope if in Fragment/Activity
             try {
                 withContext(Dispatchers.IO) { // Run database operation on IO thread
@@ -443,10 +412,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     dao.deleteAllProducts()
                     Log.d("ClearData", "All products deleted successfully.")
                 }
-                // Switch back to Main thread for UI feedback
                 withContext(Dispatchers.Main) {
                     showToast("All products cleared!")
-                    // Your RecyclerView observing LiveData should automatically update to show empty state
                 }
             } catch (e: Exception) {
                 Log.e("ClearData", "Error clearing products table: ${e.message}", e)
@@ -457,7 +424,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
     }
 
-    // Optional: Basic Confirmation Dialog
     private fun showConfirmationDialog(onConfirm: (Boolean) -> Unit) {
         AlertDialog.Builder(requireContext())
             .setTitle("Confirm Deletion")

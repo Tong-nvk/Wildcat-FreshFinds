@@ -1,27 +1,31 @@
-package cit.edu.WildcatFreshFinds // Use your package name
+package cit.edu.WildcatFreshFinds
 
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.IntentCompat // For getParcelableExtra API 33+
+import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.IntentCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.NumberFormat
 import java.util.Locale
 
 class ProductDetailActivity : AppCompatActivity() {
 
-    // Define keys for Intent extras (good practice)
+    private val viewModel: ProductDetailViewModel by viewModels()
+
     companion object {
-        const val EXTRA_PRODUCT = "EXTRA_PRODUCT" // Use this if passing Parcelable
-        // Define others if passing individually
-        // const val EXTRA_PRODUCT_ID = "EXTRA_PRODUCT_ID"
-        // const val EXTRA_PRODUCT_NAME = "EXTRA_PRODUCT_NAME"
-        // ... etc.
+        const val EXTRA_PRODUCT = "EXTRA_PRODUCT"
     }
 
     private lateinit var productImageView: ImageView
@@ -30,7 +34,6 @@ class ProductDetailActivity : AppCompatActivity() {
     private lateinit var productDescTextView: TextView
     private lateinit var productSellerTextView: TextView
     private lateinit var availableQuantityTextView: TextView
-    // Add views for quantity selection (e.g., TextView, Buttons)
     private lateinit var selectedQuantityTextView: TextView
     private lateinit var decreaseQtyButton: Button
     private lateinit var increaseQtyButton: Button
@@ -38,14 +41,17 @@ class ProductDetailActivity : AppCompatActivity() {
     private lateinit var backButton: ImageView
 
     private var currentProduct: Product? = null
-    private var selectedQuantity: Int = 1 // Default to buying 1
+    private var selectedQuantity: Int = 1
     private var maxQuantity: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_product_detail) // Create this layout next
+        setContentView(R.layout.activity_product_detail)
+        // Keep immersive mode setup if needed
+        @Suppress("DEPRECATION")
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN
 
-        // --- Find Views ---
         backButton = findViewById(R.id.back_icon);
         productImageView = findViewById(R.id.detail_product_image)
         productNameTextView = findViewById(R.id.detail_product_name)
@@ -57,81 +63,68 @@ class ProductDetailActivity : AppCompatActivity() {
         decreaseQtyButton = findViewById(R.id.detail_decrease_qty_button)
         increaseQtyButton = findViewById(R.id.detail_increase_qty_button)
         buyNowButton = findViewById(R.id.detail_buy_now_button)
-        // --- End Find Views ---
 
-
-        // --- Get Product Data from Intent ---
         if (intent.hasExtra(EXTRA_PRODUCT)) {
             currentProduct = IntentCompat.getParcelableExtra(intent, EXTRA_PRODUCT, Product::class.java)
         }
-        // --- Alternative: Get individual extras if not using Parcelable ---
-        // val productId = intent.getStringExtra(EXTRA_PRODUCT_ID)
-        // val productName = intent.getStringExtra(EXTRA_PRODUCT_NAME)
-        // ... etc ...
-        // if (productId != null) {
-        //     currentProduct = Product(id = productId, name = productName, ...) // Reconstruct object
-        // }
 
 
-        // --- Populate UI ---
         if (currentProduct != null) {
-            populateUi(currentProduct!!)
+            populateUi(currentProduct!!) // Populate basic info
             setupQuantitySelector()
+            // --- Check seller status using ViewModel ---
+            viewModel.checkSellerStatus(currentProduct)
         } else {
-            // Handle error - product data not received
             Log.e("ProductDetailActivity", "Product data not received via Intent.")
             showToast("Error loading product details.")
-            finish() // Close activity if no data
+            finish()
             return
         }
-        // --- End Populate UI ---
+
+        setupObservers()
+
+        buyNowButton.setOnClickListener {
+            handleBuyNowClick()
+        }
 
         backButton.setOnClickListener {
             finish()
         }
-
-        // --- Setup Buy Now Button ---
-        buyNowButton.setOnClickListener {
-            handleBuyNow()
-        }
-        // --- End Setup Buy Now Button ---
     }
 
     private fun populateUi(product: Product) {
         productNameTextView.text = product.name ?: "N/A"
         productDescTextView.text = product.description ?: "No description."
-        productSellerTextView.text = "Sold by: ${product.seller ?: "Unknown"}"
+        // Display seller info
+        productSellerTextView.text = "Seller: ${product.sellerEmail ?: "Unknown"}"
 
         val format: NumberFormat = NumberFormat.getCurrencyInstance(Locale("en", "PH"))
         productPriceTextView.text = product.price?.let { format.format(it) } ?: "N/A"
 
-        maxQuantity = product.quantity // Store max quantity
+        maxQuantity = product.quantity
         availableQuantityTextView.text = "Available: $maxQuantity"
 
         // Load image
         product.imageUrl?.let { filePath ->
             Glide.with(this)
-                .load(filePath) // Load from file path
-                .placeholder(R.drawable.empty_img) // Use your placeholder
-                .error(R.drawable.empty_img)     // Use your error drawable
-                .into(productImageView)
-        } ?: productImageView.setImageResource(R.drawable.empty_img) // Set placeholder if null
-
+                .load(filePath)
+                .placeholder(R.drawable.empty_img)
+                .error(R.drawable.empty_img)
+                .into(productImageView) // Assuming this doesn't need centerCrop based on XML
+        } ?: productImageView.setImageResource(R.drawable.empty_img)
     }
 
     private fun setupQuantitySelector() {
-        selectedQuantity = 1 // Start with 1 selected
+        selectedQuantity = 1
         updateQuantityDisplay()
-
         decreaseQtyButton.setOnClickListener {
             if (selectedQuantity > 1) {
                 selectedQuantity--
                 updateQuantityDisplay()
             }
         }
-
         increaseQtyButton.setOnClickListener {
-            if (selectedQuantity < maxQuantity) { // Can't select more than available
+            if (selectedQuantity < maxQuantity) {
                 selectedQuantity++
                 updateQuantityDisplay()
             } else {
@@ -142,28 +135,83 @@ class ProductDetailActivity : AppCompatActivity() {
 
     private fun updateQuantityDisplay() {
         selectedQuantityTextView.text = selectedQuantity.toString()
-        // Enable/disable buttons based on quantity
         decreaseQtyButton.isEnabled = selectedQuantity > 1
         increaseQtyButton.isEnabled = selectedQuantity < maxQuantity
     }
 
-    private fun handleBuyNow() {
-        if (currentProduct == null) return
+    private fun setupObservers() {
+        viewModel.isCurrentUserSeller.observe(this, Observer { isSeller ->
+            if (isSeller) {
+                buyNowButton.isEnabled = false
+                buyNowButton.alpha = 0.5f
+                Log.d("ProductDetailActivity", "Observer: User IS the seller, button disabled.")
+            } else {
+                buyNowButton.isEnabled = true
+                buyNowButton.alpha = 1.0f
+                Log.d("ProductDetailActivity", "Observer: User is NOT the seller, button enabled.")
+            }
+        })
 
-        val productName = currentProduct!!.name ?: "Product"
-        showToast("Buying $selectedQuantity of $productName.")
+        viewModel.toastMessage.observe(this, Observer { event ->
+            event.getContentIfNotHandled()?.let { message ->
+                showToast(message)
+            }
+        })
 
-        // TODO: Implement actual purchase logic:
-        // 1. Check if selectedQuantity <= current available quantity again (race condition?)
-        // 2. Perform payment processing (if applicable)
-        // 3. Update the quantity in the database:
-        //    - Calculate newQuantity = currentProduct!!.quantity - selectedQuantity
-        //    - Create updatedProduct = currentProduct!!.copy(quantity = newQuantity)
-        //    - Call a method (e.g., in a ViewModel/Repository) to update the product in Room DB using ProductDao's update method.
-        //    - Handle success/failure of the database update.
-        // 4. Navigate to a success/confirmation screen or back to the list.
+        viewModel.purchaseInitiated.observe(this, Observer { event ->
+            event.getContentIfNotHandled()?.let { success ->
+                if (success) {
+                    Log.d("ProductDetailActivity", "Purchase initiated successfully, finishing activity.")
+                    finish()
+                }
+            }
+        })
+    }
 
-        Log.d("ProductDetailActivity", "Buy Now clicked for ${currentProduct?.id}, quantity: $selectedQuantity")
+    private fun handleBuyNowClick() {
+        val product = currentProduct ?: return // Use locally stored product
+
+        if (selectedQuantity <= 0) {
+            showToast("Please select a quantity.")
+            return
+        }
+        if (selectedQuantity > product.quantity) {
+            showToast("Only ${product.quantity} available.")
+            selectedQuantity = product.quantity // Reset selection
+            updateQuantityDisplay()
+            return
+        }
+
+        showPurchaseConfirmationDialog(product, selectedQuantity) { confirmed ->
+            if (confirmed) {
+
+                lifecycleScope.launch {
+                    val buyer = withContext(Dispatchers.IO) { UserManager.getSignedIn() } // Get buyer info
+                    if (buyer?.email == null) {
+                        showToast("Could not confirm your identity. Please log in again.")
+                    } else {
+                        // Pass all necessary info to ViewModel
+                        viewModel.initiatePurchase(product, selectedQuantity, buyer.email)
+                    }
+                }
+            }
+        }
+    }
+
+
+    private fun showPurchaseConfirmationDialog(product: Product, quantity: Int, onConfirm: (Boolean) -> Unit) {
+        AlertDialog.Builder(this)
+            .setTitle("Confirm Purchase")
+            .setMessage("Are you sure you want to buy $quantity of ${product.name ?: "this item"}?")
+            .setPositiveButton("Yes") { dialog, _ ->
+                onConfirm(true)
+                dialog.dismiss()
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                onConfirm(false)
+                dialog.dismiss()
+            }
+            .show()
     }
 
 

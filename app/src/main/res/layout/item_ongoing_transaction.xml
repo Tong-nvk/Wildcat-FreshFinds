@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardUseCompatPadding="true"
+    android:background="@color/container_bg"
+    app:cardElevation="2dp"
+    app:cardCornerRadius="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@color/container_bg"
+        android:padding="12dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/detail_product_image_card"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:cardBackgroundColor="@color/maroon"
+            app:layout_constraintBottom_toTopOf="@id/button_chat_teams"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/transaction_time_remaining"
+            app:cardElevation="12dp"
+
+            >
+        <ImageView
+            android:id="@+id/transaction_item_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/empty_img"
+            android:layout_margin="5dp"
+            android:elevation="20dp"
+            android:background="@color/gold"
+          />
+        </androidx.cardview.widget.CardView>
+        <TextView
+
+            android:id="@+id/transaction_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:textColor="@color/maroon"
+            android:layout_marginTop="5dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/anybody_black"
+            app:layout_constraintStart_toEndOf="@id/detail_product_image_card"
+            app:layout_constraintTop_toTopOf="@id/detail_product_image_card"
+            app:layout_constraintBottom_toTopOf="@id/transaction_item_details"
+            tools:text="Product Name" />
+       <TextView
+        android:id="@+id/transaction_time_remaining"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+           app:layout_constraintStart_toStartOf="@id/detail_product_image_card"
+           app:layout_constraintTop_toTopOf="parent"
+           app:layout_constraintBottom_toTopOf="@id/detail_product_image_card"
+        android:textColor="@color/maroon"
+        android:fontFamily="@font/anybody_bold"
+
+        />
+
+
+        <TextView
+            android:id="@+id/transaction_item_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+
+            android:textSize="14sp"
+            android:textColor="@color/gold"
+            android:fontFamily="@font/anybody_regular"
+            app:layout_constraintStart_toEndOf="@id/detail_product_image_card"
+            app:layout_constraintTop_toBottomOf="@id/transaction_item_name"
+            app:layout_constraintBottom_toTopOf="@id/transaction_item_details"
+            tools:text="Qty: 2 | Total: ₱2000.00" />
+
+        <TextView
+            android:id="@+id/transaction_seller_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+
+            android:textSize="12sp"
+            android:textColor="@color/gold"
+            android:fontFamily="@font/anybody_regular"
+            app:layout_constraintStart_toEndOf="@id/detail_product_image_card"
+            app:layout_constraintTop_toBottomOf="@id/transaction_item_details"
+            tools:text="Seller: seller@cit.edu" />
+
+
+        <Button
+            android:id="@+id/button_chat_teams"
+
+
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:background="@drawable/maroon_button"
+            android:fontFamily="@font/anybody_black"
+            android:text="Message"
+            android:textColor="@color/gold"
+            android:textSize="11sp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/button_successful"
+            app:layout_constraintStart_toStartOf="@+id/detail_product_image_card"
+            app:layout_constraintTop_toBottomOf="@+id/detail_product_image_card" />
+
+        <Button
+            android:id="@+id/button_successful"
+            android:layout_width="100dp"
+
+            android:layout_height="40dp"
+            android:background="@drawable/maroon_button"
+            android:fontFamily="@font/anybody_black"
+            android:text="SUCCESSFUL"
+            android:textColor="@color/gold"
+            app:layout_constraintStart_toEndOf="@+id/button_chat_teams"
+            app:layout_constraintEnd_toStartOf="@id/button_unsuccessful"
+            app:layout_constraintTop_toTopOf="@id/button_chat_teams"
+            android:textSize="11sp"
+
+            app:layout_constraintBottom_toBottomOf="@id/button_chat_teams"
+            />
+        <Button
+
+            android:id="@+id/button_unsuccessful"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            app:layout_constraintStart_toEndOf="@+id/button_successful"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/button_chat_teams"
+            app:layout_constraintBottom_toBottomOf="@id/button_chat_teams"
+            android:background="@drawable/maroon_button"
+            android:textColor="@color/gold"
+            android:textSize="11sp"
+            android:text="UNSUCCESSFUL"
+            android:fontFamily="@font/anybody_black"
+
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

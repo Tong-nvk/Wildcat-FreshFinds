@@ -1,17 +1,20 @@
 package cit.edu.WildcatFreshFinds
 
-// ... imports ...
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
 
-// ---> Increment version from 2 to 3 <---
-@Database(entities = [User::class, Product::class], version = 3, exportSchema = false)
+
+@Database(
+    entities = [User::class, Product::class, OngoingTransaction::class],
+    version = 4, //
+    exportSchema = false
+)
+
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
     abstract fun productDao(): ProductDao
+    abstract fun ongoingTransactionDao(): OngoingTransactionDao
 
     companion object {
         @Volatile
@@ -22,9 +25,8 @@ abstract class AppDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "wildcat_fresh_finds_db" // Your DB name
+                    "wildcat_fresh_finds_db"
                 )
-                    // Destructive migration will wipe ALL data again (Users and Products)
                     .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance

@@ -77,13 +77,14 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     // --- Added/Verified Dependencies ---
-
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
     // Activity KTX (Essential for registerForActivityResult)
     // Check if libs.androidx.activity includes KTX, otherwise add explicitly:
     implementation("androidx.activity:activity-ktx:1.8.2") // Use latest version or define in libs.versions.toml
 
     // Lifecycle ViewModel KTX (Good practice for architecture)
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0") // Use latest version or define in libs.versions.toml
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation(libs.androidx.work.runtime.ktx) // Use latest version or define in libs.versions.toml
 
     // Room database (Your existing declarations are correct)
     val room_version = "2.6.1" // Consider defining this in libs.versions.toml
