@@ -23,7 +23,7 @@ class ProductAdapter : ListAdapter<Product, ProductAdapter.ProductViewHolder>(Pr
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_product, parent, false) // Your item layout
+            .inflate(R.layout.item_product, parent, false)
         return ProductViewHolder(view)
     }
 
@@ -40,7 +40,7 @@ class ProductAdapter : ListAdapter<Product, ProductAdapter.ProductViewHolder>(Pr
 
         init {
             itemView.setOnClickListener {
-                val position = bindingAdapterPosition // Assuming this is resolved now
+                val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val clickedProduct = getItem(position)
                     onItemClickListener?.invoke(clickedProduct)
@@ -89,10 +89,10 @@ class ProductAdapter : ListAdapter<Product, ProductAdapter.ProductViewHolder>(Pr
 
 class ProductDiffCallback : DiffUtil.ItemCallback<Product>() {
     override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
-        return oldItem.id == newItem.id // Compare by unique ID
+        return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
-        return oldItem == newItem // Checks all fields (data class benefit)
+        return oldItem == newItem
     }
 }

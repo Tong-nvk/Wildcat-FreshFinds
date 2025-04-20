@@ -82,9 +82,9 @@ class SettingsActivity : AppCompatActivity() {
 
         logOutButton.setOnClickListener {
             UserManager.signOut()
-            Log.d("SettingsActivity", "User signed out.") // Use Log.d for info
+            Log.d("SettingsActivity", "User signed out.")
 
-            val intent = Intent(this, LandingActivity::class.java) // Go to Landing/Login
+            val intent = Intent(this, LandingActivity::class.java)
 
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
 

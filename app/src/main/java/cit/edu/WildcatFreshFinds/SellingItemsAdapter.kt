@@ -18,19 +18,17 @@ import java.util.concurrent.TimeUnit
 import android.util.Log // Import Log
 import android.widget.ImageButton
 
-// Re-use TransactionDiffCallback as it compares OngoingTransaction objects
-// class TransactionDiffCallback : DiffUtil.ItemCallback<OngoingTransaction>() { ... }
 
 class SellingItemsAdapter(
-    private val onChatBuyerClick: (buyerEmail: String) -> Unit, // Renamed listener
-    private val onConfirmHandoverClick: (transaction: OngoingTransaction) -> Unit, // Renamed listener
+    private val onChatBuyerClick: (buyerEmail: String) -> Unit,
+    private val onConfirmHandoverClick: (transaction: OngoingTransaction) -> Unit,
     private val onCancelClick: (transaction: OngoingTransaction) -> Unit,
     private val onReportIssueClick: (transaction: OngoingTransaction) -> Unit
 ) : ListAdapter<OngoingTransaction, SellingItemsAdapter.SellingItemViewHolder>(TransactionDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SellingItemViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_selling_item, parent, false) // Use seller item layout
+            .inflate(R.layout.item_selling_item, parent, false)
         return SellingItemViewHolder(view)
     }
 
@@ -40,7 +38,6 @@ class SellingItemsAdapter(
     }
 
     inner class SellingItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        // Find views using IDs from item_selling_item.xml
         private val imageView: ImageView = itemView.findViewById(R.id.selling_item_image)
         private val nameTextView: TextView = itemView.findViewById(R.id.selling_item_name)
         private val detailsTextView: TextView = itemView.findViewById(R.id.selling_item_details)
@@ -73,57 +70,51 @@ class SellingItemsAdapter(
 
         fun bind(transaction: OngoingTransaction) {
             val context = itemView.context
-            // Bind basic info
             nameTextView.text = transaction.productName ?: "Product"
             val format: NumberFormat = NumberFormat.getCurrencyInstance(Locale("en", "PH"))
             val formattedTotal = format.format(transaction.totalPrice)
             detailsTextView.text = "Qty: ${transaction.quantityBought} | Total: $formattedTotal"
-            buyerEmailTextView.text = "Buyer: ${transaction.buyerEmail}" // Show Buyer Email
+            buyerEmailTextView.text = "Buyer: ${transaction.buyerEmail}"
 
-            // Bind Image
             transaction.productImageUrl?.let { path ->
                 Glide.with(context).load(path)
                     .placeholder(R.drawable.empty_img).error(R.drawable.empty_img).centerCrop()
                     .into(imageView)
             } ?: imageView.setImageResource(R.drawable.empty_img)
 
-            // Bind Time Remaining
             val remainingTimeText = formatRemainingTime(transaction.deadlineTimestamp)
             timeRemainingTextView.text = remainingTimeText
             timeRemainingTextView.setTextColor(ContextCompat.getColor(context,
                 if (remainingTimeText == "Expired") android.R.color.holo_red_dark else R.color.maroon // Use your color
             ))
 
-            // --- Update UI based on State (SELLER'S PERSPECTIVE) ---
             var statusText = ""
             var showConfirm = false
             var showCancel = false
             var showReport = false
-            var showChat = false // Keep showing chat in intermediate states
+            var showChat = false
 
             when (transaction.state) {
                 TransactionState.ONGOING -> {
                     statusText = "Status: Waiting for confirmations"
-                    showConfirm = true // Seller needs to confirm
+                    showConfirm = true
                     showCancel = true
                     showReport = true
                     showChat = true
                 }
                 TransactionState.BUYER_CONFIRMED -> {
-                    // Buyer confirmed, Seller still needs to confirm
                     statusText = "Status: Buyer confirmed receipt"
-                    showConfirm = true // Seller needs to confirm
-                    showCancel = false // Seller CANNOT cancel normally now
-                    showReport = true  // Seller CAN report if issue
+                    showConfirm = true
+                    showCancel = false
+                    showReport = true
                     showChat = true
                 }
                 TransactionState.SELLER_CONFIRMED -> {
-                    // Seller already confirmed, waiting for buyer
                     statusText = "Status: You confirmed handover"
-                    showConfirm = false // Seller already confirmed
-                    showCancel = false // Seller cannot cancel after confirming
-                    showReport = false // Seller cannot report after confirming
-                    showChat = true // Allow chat while waiting for buyer
+                    showConfirm = false
+                    showCancel = false
+                    showReport = false
+                    showChat = true
                 }
                 TransactionState.COMPLETED -> {
                     statusText = "Status: Completed ${formatTimestamp(transaction.completionTimestamp)}"
@@ -147,9 +138,8 @@ class SellingItemsAdapter(
             reportButton.visibility = if(showReport) View.VISIBLE else View.GONE
             chatButton.visibility = if(showChat) View.VISIBLE else View.GONE
             chatButton.text = "Message Buyer" // Or just Message
-            // --- End State Update ---
         }
-    } // End ViewHolder
+    }
 
     // Helper Function to Format Time (Copied from OngoingTransactionAdapter)
     private fun formatRemainingTime(deadlineMillis: Long): String {
@@ -169,8 +159,8 @@ class SellingItemsAdapter(
     // Helper to format timestamp (Copied from OngoingTransactionAdapter)
     private fun formatTimestamp(timestamp: Long?): String {
         return timestamp?.let {
-            android.text.format.DateFormat.format("MMM dd, yyyy", it).toString() // Example format
+            android.text.format.DateFormat.format("MMM dd, yyyy", it).toString()
         } ?: ""
     }
 
-} // End Adapter Class
+}

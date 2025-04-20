@@ -59,12 +59,10 @@ class MyListingsAdapter(
                     .into(imageView)
             } ?: imageView.setImageResource(R.drawable.empty_img)
 
-            // Delete button is always enabled visually;
-            // the ViewModel checks transaction status onClick.
+
             deleteButton.isEnabled = true
             deleteButton.alpha = 1.0f
         }
     }
 }
 
-// DiffUtil Callback for Product objects

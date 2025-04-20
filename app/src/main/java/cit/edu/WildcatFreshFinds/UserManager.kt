@@ -7,20 +7,20 @@ import kotlinx.coroutines.withContext
 
 object UserManager {
     private var signedIn: User? = null
-    private lateinit var userDao: UserDao // Assuming this is initialized correctly via AppDatabase now
+    private lateinit var userDao: UserDao
 
     fun initialize(context: Context) {
         userDao = AppDatabase.getDatabase(context).userDao()
         Log.d("UserManager", "UserManager initialized with userDao: $userDao")
     }
 
-    suspend fun registerUser(firstName: String, lastName: String, email: String, password: String): String { // <-- Changed params
+    suspend fun registerUser(firstName: String, lastName: String, email: String, password: String): String {
         return withContext(Dispatchers.IO) {
             val existingUser = userDao.findByEmail(email)
             if (existingUser != null) {
                 "Email is already taken"
             } else {
-                val newUser = User(email, firstName, lastName, password) // <-- Use new params
+                val newUser = User(email, firstName, lastName, password)
                 userDao.insert(newUser)
                 "Registration Successful!"
             }
@@ -39,7 +39,7 @@ object UserManager {
         }
     }
 
-    suspend fun editUser(firstName: String, lastName: String, password: String): Boolean { // <-- Changed params
+    suspend fun editUser(firstName: String, lastName: String, password: String): Boolean {
         return withContext(Dispatchers.IO) {
             if (signedIn == null) {
                 Log.w("UserManager", "editUser: No user signed in!")
@@ -52,7 +52,7 @@ object UserManager {
                 user.password = password
                 userDao.update(user)
 
-                signedIn = user.copy(firstName = firstName, lastName = lastName, password = password) // Use copy for immutability if User was val
+                signedIn = user.copy(firstName = firstName, lastName = lastName, password = password)
 
                 Log.d("UserManager","User edit successful for ${user.email}")
                 true

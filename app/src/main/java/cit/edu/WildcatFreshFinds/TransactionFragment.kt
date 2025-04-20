@@ -38,7 +38,7 @@ class TransactionFragment : Fragment(R.layout.fragment_transaction) {
             currentButton = childFragmentManager.findFragmentById(R.id.transaction_fragment_container)?.let {
                 if (it is OngoingTransactionFragment) ongoingTransactionButton else if (it is SellingItemsFragment) sellingItemsButton else null
             }
-            currentButton?.let { setActiveButton(it) } // Try to restore visual state
+            currentButton?.let { setActiveButton(it) }
         }
 
 
@@ -86,7 +86,7 @@ class TransactionFragment : Fragment(R.layout.fragment_transaction) {
 
     private fun replaceFragment(fragment: Fragment) {
         childFragmentManager.beginTransaction().apply {
-            replace(R.id.transaction_fragment_container, fragment) // Ensure this ID exists in fragment_transaction.xml
+            replace(R.id.transaction_fragment_container, fragment)
             commit()
             Log.d("TransactionFragment", "Replacing fragment with ${fragment::class.java.simpleName}")
         }

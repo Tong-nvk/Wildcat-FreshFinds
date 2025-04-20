@@ -34,10 +34,10 @@ interface ProductDao {
     suspend fun delete(product: Product)
 
     @Query("SELECT * FROM products WHERE id = :productId")
-    suspend fun getProductById(productId: String): Product? // Need suspend version
+    suspend fun getProductById(productId: String): Product?
 
     @Query("UPDATE products SET quantity = quantity + :quantityToAdd WHERE id = :productId")
-    suspend fun addQuantityToProduct(productId: String, quantityToAdd: Int): Int // Returns rows affected
+    suspend fun addQuantityToProduct(productId: String, quantityToAdd: Int): Int 
 
     @Query("SELECT * FROM products WHERE sellerEmail = :sellerEmail ORDER BY name ASC")
     fun getProductsBySeller(sellerEmail: String): LiveData<List<Product>>

@@ -136,9 +136,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         } catch (e: Exception) {
             Log.e("HomeFragment", "Error loading products for query '$query': ${e.message}", e)
             showToast("Error loading products.")
-            currentProductSource?.let { productsLiveData.removeSource(it) } // Clean up source on error
+            currentProductSource?.let { productsLiveData.removeSource(it) }
             currentProductSource = null
-            productsLiveData.value = emptyList() // Set to empty on error
+            productsLiveData.value = emptyList()
         }
     }
 

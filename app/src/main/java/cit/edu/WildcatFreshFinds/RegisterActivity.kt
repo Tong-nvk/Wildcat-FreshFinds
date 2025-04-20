@@ -25,15 +25,15 @@ class RegisterActivity : AppCompatActivity() {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN
 
-        val firstNameField = findViewById<EditText>(R.id.first_name_input) // <-- Add this
-        val lastNameField = findViewById<EditText>(R.id.last_name_input)   // <-- Add this
+        val firstNameField = findViewById<EditText>(R.id.first_name_input) 
+        val lastNameField = findViewById<EditText>(R.id.last_name_input)
         val emailField = findViewById<EditText>(R.id.email_input)
         val passwordField = findViewById<EditText>(R.id.password_input)
         val confirmPasswordField = findViewById<EditText>(R.id.confirm_password_input)
         val registerButton = findViewById<Button>(R.id.register_button)
         val loginButton = findViewById<TextView>(R.id.sign_in_click)
         val commGuidelinesButton = findViewById<TextView>(R.id.tv_community_guidelines)
-        val checkBox = findViewById<CheckBox>(R.id.cb_community_guidelines) // Find Checkbox here is fine
+        val checkBox = findViewById<CheckBox>(R.id.cb_community_guidelines)
 
         try {
             UserManager.initialize(this)

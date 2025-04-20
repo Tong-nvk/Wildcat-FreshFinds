@@ -5,7 +5,7 @@ import android.content.Context
 object DatabaseManager {
 
     fun getDatabase(context: Context): AppDatabase {
-        return AppDatabase.getDatabase(context) // <-- Delegate to the correct singleton
+        return AppDatabase.getDatabase(context)
     }
 
     fun productDao(context: Context): ProductDao {

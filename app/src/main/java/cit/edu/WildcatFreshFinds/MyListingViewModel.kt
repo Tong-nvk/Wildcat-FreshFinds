@@ -15,12 +15,11 @@ class MyListingsViewModel(application: Application) : AndroidViewModel(applicati
 
     private val _currentUserEmail = MutableLiveData<String?>()
 
-    // LiveData for the user's product listings
     val userListings: LiveData<List<Product>> = _currentUserEmail.switchMap { email ->
         if (email == null) {
-            MutableLiveData() // Empty
+            MutableLiveData()
         } else {
-            productDao.getProductsBySeller(email) // Observe products by seller
+            productDao.getProductsBySeller(email)
         }
     }
 
@@ -42,28 +41,22 @@ class MyListingsViewModel(application: Application) : AndroidViewModel(applicati
     fun deleteListing(product: Product) {
         viewModelScope.launch { // Use viewModelScope
             try {
-                // Check for active transactions first
                 val activeTransactionCount = withContext(Dispatchers.IO) {
                     transactionDao.countActiveTransactionsForProduct(product.id)
                 }
                 Log.d("MyListingsViewModel", "Product ${product.id} has $activeTransactionCount active transactions.")
 
                 if (activeTransactionCount > 0) {
-                    // Cannot delete, show message
                     _toastMessage.postValue(Event("Cannot delete '${product.name}': Active transactions exist."))
                 } else {
-                    // No active transactions, proceed with deletion
                     val rowsDeleted = withContext(Dispatchers.IO) {
                         productDao.deleteProductById(product.id) // Use delete by ID
-                        // Or productDao.delete(product) if using @Delete
                     }
 
                     if (rowsDeleted > 0) {
                         Log.i("MyListingsViewModel", "Deleted product ${product.id} from DB.")
-                        // Also delete the associated image file from internal storage
                         deleteProductImageFile(product.imageUrl)
                         _toastMessage.postValue(Event("Deleted '${product.name}' successfully."))
-                        // LiveData driving userListings will update automatically
                     } else {
                         Log.w("MyListingsViewModel", "Failed to delete product ${product.id} from DB (already deleted?).")
                         _toastMessage.postValue(Event("Could not delete '${product.name}'."))
@@ -79,7 +72,7 @@ class MyListingsViewModel(application: Application) : AndroidViewModel(applicati
     // Helper to delete image file
     private fun deleteProductImageFile(filePath: String?) {
         if (filePath.isNullOrBlank()) return
-        viewModelScope.launch(Dispatchers.IO) { // IO for file operations
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 val file = File(filePath)
                 if (file.exists()) {

@@ -28,7 +28,7 @@ class ProductDetailViewModel(application: Application) : AndroidViewModel(applic
     fun checkSellerStatus(product: Product?) {
         val sellerEmail = product?.sellerEmail
         if (sellerEmail == null) {
-            _isCurrentUserSeller.value = false // Cannot be seller if product has no seller email
+            _isCurrentUserSeller.value = false
             return
         }
         viewModelScope.launch {
@@ -41,7 +41,6 @@ class ProductDetailViewModel(application: Application) : AndroidViewModel(applic
         Log.d("ProductDetailViewModel", "Initiating purchase VM logic for ${product.id}, quantity: $quantityBought")
         viewModelScope.launch {
             try {
-                // Re-check quantity in DB for safety before proceeding
                 val currentDbQuantity = withContext(Dispatchers.IO) { productDao.getProductById(product.id)?.quantity ?: -1 }
                 if (quantityBought <= 0 || quantityBought > currentDbQuantity) {
                     _toastMessage.postValue(Event("Quantity unavailable or invalid (currently $currentDbQuantity)."))
@@ -49,8 +48,8 @@ class ProductDetailViewModel(application: Application) : AndroidViewModel(applic
                 }
                 if (product.sellerEmail == null || product.price == null) { /* ... error handling ... */ return@launch}
 
-                val newProductQuantity = currentDbQuantity - quantityBought // Use DB quantity
-                val updatedProduct = product.copy(quantity = newProductQuantity) // Create copy with new quantity
+                val newProductQuantity = currentDbQuantity - quantityBought
+                val updatedProduct = product.copy(quantity = newProductQuantity)
 
                 val newTransaction = OngoingTransaction(
                     productId = product.id,
@@ -64,15 +63,10 @@ class ProductDetailViewModel(application: Application) : AndroidViewModel(applic
                     state = TransactionState.ONGOING // <-- Set initial state
                 )
 
-                // Perform DB operations
                 withContext(Dispatchers.IO) {
-                    // It's generally safer to perform these in a Room @Transaction method if possible
-                    // to ensure atomicity, but separate calls work for now.
                     productDao.update(updatedProduct)
                     transactionDao.insertTransaction(newTransaction)
                     Log.d("ProductDetailViewModel", "DB updated: Product quantity decreased, Transaction inserted.")
-                    // TODO: Schedule WorkManager task for timeout check here
-                    // scheduleTimeoutWorker(getApplication(), newTransaction.transactionId, newTransaction.deadlineTimestamp)
                 }
 
                 _toastMessage.postValue(Event("Purchase initiated!"))
@@ -104,7 +98,7 @@ class ProductDetailViewModel(application: Application) : AndroidViewModel(applic
 
         WorkManager.getInstance(appContext).enqueueUniqueWork(
             "timeout_$transactionId",
-            ExistingWorkPolicy.REPLACE, // Replace if already scheduled for same Tx ID
+            ExistingWorkPolicy.REPLACE,
             timeoutWorkRequest
         )
         Log.i("ProductDetailViewModel", "Enqueued timeout worker for Tx ID: $transactionId with delay $delay ms")

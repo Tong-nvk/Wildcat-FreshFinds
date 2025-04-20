@@ -52,7 +52,6 @@ class ProductDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_detail)
-        // Keep immersive mode setup if needed
         @Suppress("DEPRECATION")
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -75,9 +74,8 @@ class ProductDetailActivity : AppCompatActivity() {
 
 
         if (currentProduct != null) {
-            populateUi(currentProduct!!) // Populate basic info
+            populateUi(currentProduct!!)
             setupQuantitySelector()
-            // --- Check seller status using ViewModel ---
             viewModel.checkSellerStatus(currentProduct)
         } else {
             Log.e("ProductDetailActivity", "Product data not received via Intent.")
@@ -115,7 +113,7 @@ class ProductDetailActivity : AppCompatActivity() {
                 .load(filePath)
                 .placeholder(R.drawable.empty_img)
                 .error(R.drawable.empty_img)
-                .into(productImageView) // Assuming this doesn't need centerCrop based on XML
+                .into(productImageView)
         } ?: productImageView.setImageResource(R.drawable.empty_img)
     }
 
@@ -174,7 +172,7 @@ class ProductDetailActivity : AppCompatActivity() {
     }
 
     private fun handleBuyNowClick() {
-        val product = currentProduct ?: return // Use locally stored product
+        val product = currentProduct ?: return
 
         if (selectedQuantity <= 0) {
             showToast("Please select a quantity.")
@@ -182,7 +180,7 @@ class ProductDetailActivity : AppCompatActivity() {
         }
         if (selectedQuantity > product.quantity) {
             showToast("Only ${product.quantity} available.")
-            selectedQuantity = product.quantity // Reset selection
+            selectedQuantity = product.quantity
             updateQuantityDisplay()
             return
         }
@@ -195,7 +193,6 @@ class ProductDetailActivity : AppCompatActivity() {
                     if (buyer?.email == null) {
                         showToast("Could not confirm your identity. Please log in again.")
                     } else {
-                        // Pass all necessary info to ViewModel
                         viewModel.initiatePurchase(product, selectedQuantity, buyer.email)
                     }
                 }
@@ -205,59 +202,54 @@ class ProductDetailActivity : AppCompatActivity() {
 
 
     private fun showPurchaseConfirmationDialog(product: Product, quantity: Int, onConfirm: (Boolean) -> Unit) {
-        // No longer directly uses AlertDialog.Builder
         showCustomConfirmationDialog(
-            context = this, // Activity context
+            context = this,
             message = "Are you sure you want to buy $quantity of ${product.name ?: "this item"}?",
             positiveButtonText = "Yes",
             negativeButtonText = "No",
             onPositiveClick = {
-                onConfirm(true) // Call original lambda with true
+                onConfirm(true)
             },
             onNegativeClick = {
-                onConfirm(false) // Call original lambda with false
+                onConfirm(false)
             }
         )
     }
     fun showCustomConfirmationDialog(
         context: Context,
         message: String,
-        positiveButtonText: String = "Yes", // Default texts
+        positiveButtonText: String = "Yes",
         negativeButtonText: String = "No",
-        onPositiveClick: () -> Unit, // Lambda for positive action
-        onNegativeClick: (() -> Unit)? = null // Optional lambda for negative action
+        onPositiveClick: () -> Unit,
+        onNegativeClick: (() -> Unit)? = null
     ) {
         val dialog = Dialog(context)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false) // Or true if you want outside clicks to dismiss
-        dialog.setContentView(R.layout.dialog_confirmation) // Use the new layout
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // Make corners round
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_confirmation)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        // Find views inside the custom dialog layout
         val messageTextView = dialog.findViewById<TextView>(R.id.dialog_message_text)
         val positiveButton = dialog.findViewById<Button>(R.id.dialog_button_positive)
         val negativeButton = dialog.findViewById<Button>(R.id.dialog_button_negative)
 
-        // Check if views were found
         if (messageTextView == null || positiveButton == null || negativeButton == null) {
             Log.e("CustomDialog", "Error finding views in dialog_confirmation.xml")
             Toast.makeText(context, "Error showing dialog.", Toast.LENGTH_SHORT).show()
             return
         }
 
-        // Set the content
         messageTextView.text = message
         positiveButton.text = positiveButtonText
         negativeButton.text = negativeButtonText
 
-        // Set click listeners
         positiveButton.setOnClickListener {
-            onPositiveClick() // Execute the positive action
+            onPositiveClick()
             dialog.dismiss()
         }
 
         negativeButton.setOnClickListener {
-            onNegativeClick?.invoke() // Execute the negative action (if provided)
+            onNegativeClick?.invoke()
             dialog.dismiss()
         }
 

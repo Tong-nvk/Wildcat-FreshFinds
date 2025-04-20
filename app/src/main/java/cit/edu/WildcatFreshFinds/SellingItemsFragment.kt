@@ -29,14 +29,13 @@ import kotlinx.coroutines.withContext
 
 class SellingItemsFragment : Fragment(R.layout.fragment_selling_items) { // Use correct layout
 
-    // Share ViewModel with parent TransactionFragment and sibling OngoingTransactionFragment
     private val viewModel: OngoingTransactionViewModel by viewModels(
         ownerProducer = { requireParentFragment() }
     )
 
-    private lateinit var sellingRecyclerView: RecyclerView // Use ID from layout
+    private lateinit var sellingRecyclerView: RecyclerView
     private lateinit var sellingAdapter: SellingItemsAdapter
-    private lateinit var groupEmptySellingView: Group // Use ID from layout
+    private lateinit var groupEmptySellingView: Group
     private var currentUserEmail: String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
@@ -47,14 +46,12 @@ class SellingItemsFragment : Fragment(R.layout.fragment_selling_items) { // Use 
         super.onViewCreated(view, savedInstanceState)
         Log.d("SellingItemsFragment", "onViewCreated")
 
-        // Find views using IDs from fragment_selling_items.xml
         sellingRecyclerView = view.findViewById(R.id.selling_items_recycler_view)
         groupEmptySellingView = view.findViewById(R.id.group_selling_empty)
 
         setupRecyclerView()
         setupObservers()
 
-        // Fetch current user email (needed for cancelling/reporting)
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             currentUserEmail = withContext(Dispatchers.IO) { UserManager.getSignedIn()?.email }
             Log.d("SellingItemsFragment", "Current user email set to: $currentUserEmail")
@@ -64,7 +61,6 @@ class SellingItemsFragment : Fragment(R.layout.fragment_selling_items) { // Use 
     private fun setupRecyclerView() {
         Log.d("SellingItemsFragment", "Setting up RecyclerView")
         sellingAdapter = SellingItemsAdapter( // Instantiate SellingItemsAdapter
-            // Map listeners to handlers or ViewModel methods
             onChatBuyerClick = { buyerEmail -> handleChatClick(buyerEmail) },
             onConfirmHandoverClick = { transaction -> viewModel.confirmHandoverAsSeller(transaction) }, // Seller confirms
             onCancelClick = { transaction -> handleCancelClick(transaction) },
@@ -78,14 +74,12 @@ class SellingItemsFragment : Fragment(R.layout.fragment_selling_items) { // Use 
 
     private fun setupObservers() {
         Log.d("SellingItemsFragment", "Setting up ViewModel observers")
-        // ---> Observe SELLER transactions <---
         viewModel.sellerTransactions.observe(viewLifecycleOwner, Observer { transactions ->
             Log.d("SellingItemsFragment", "ViewModel SELLER transactions updated: ${transactions?.size ?: "null"} items")
             sellingAdapter.submitList(transactions ?: emptyList())
             updateEmptyView(transactions.isNullOrEmpty())
         })
 
-        // Observe shared toast messages
         viewModel.toastMessage.observe(viewLifecycleOwner, Observer { event ->
             event.getContentIfNotHandled()?.let { message ->
                 showToast(message)
@@ -99,7 +93,6 @@ class SellingItemsFragment : Fragment(R.layout.fragment_selling_items) { // Use 
         sellingRecyclerView.visibility = if (isEmpty) View.GONE else View.VISIBLE
     }
 
-    // Chat logic is the same, just chats with buyer now
     private fun handleChatClick(buyerEmail: String) {
         Log.d("SellingItemsFragment", "handleChatClick received buyerEmail: $buyerEmail")
         if (buyerEmail.isBlank()) { showToast("Buyer email is missing."); return }
@@ -111,7 +104,6 @@ class SellingItemsFragment : Fragment(R.layout.fragment_selling_items) { // Use 
         catch (e: Exception) { showToast("Could not start chat.") }
     }
 
-    // Cancel logic is the same (ViewModel handles who cancelled)
     private fun handleCancelClick(transaction: OngoingTransaction) {
         val userEmail = currentUserEmail ?: run { showToast("Cannot cancel: User unknown."); return }
         showCustomConfirmationDialog(
@@ -133,49 +125,45 @@ class SellingItemsFragment : Fragment(R.layout.fragment_selling_items) { // Use 
             positiveButtonText = "Report & Cancel",
             negativeButtonText = "No",
             onPositiveClick = {
-                viewModel.cancelOrReportTransaction(transaction, userEmail) // Report uses same VM logic
+                viewModel.cancelOrReportTransaction(transaction, userEmail)
             }
         )
     }
     fun showCustomConfirmationDialog(
         context: Context,
         message: String,
-        positiveButtonText: String = "Yes", // Default texts
+        positiveButtonText: String = "Yes",
         negativeButtonText: String = "No",
-        onPositiveClick: () -> Unit, // Lambda for positive action
-        onNegativeClick: (() -> Unit)? = null // Optional lambda for negative action
+        onPositiveClick: () -> Unit,
+        onNegativeClick: (() -> Unit)? = null
     ) {
         val dialog = Dialog(context)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false) // Or true if you want outside clicks to dismiss
-        dialog.setContentView(R.layout.dialog_confirmation) // Use the new layout
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // Make corners round
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_confirmation)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        // Find views inside the custom dialog layout
         val messageTextView = dialog.findViewById<TextView>(R.id.dialog_message_text)
         val positiveButton = dialog.findViewById<Button>(R.id.dialog_button_positive)
         val negativeButton = dialog.findViewById<Button>(R.id.dialog_button_negative)
 
-        // Check if views were found
         if (messageTextView == null || positiveButton == null || negativeButton == null) {
             Log.e("CustomDialog", "Error finding views in dialog_confirmation.xml")
             Toast.makeText(context, "Error showing dialog.", Toast.LENGTH_SHORT).show()
             return
         }
 
-        // Set the content
         messageTextView.text = message
         positiveButton.text = positiveButtonText
         negativeButton.text = negativeButtonText
 
-        // Set click listeners
         positiveButton.setOnClickListener {
-            onPositiveClick() // Execute the positive action
+            onPositiveClick()
             dialog.dismiss()
         }
 
         negativeButton.setOnClickListener {
-            onNegativeClick?.invoke() // Execute the negative action (if provided)
+            onNegativeClick?.invoke()
             dialog.dismiss()
         }
 

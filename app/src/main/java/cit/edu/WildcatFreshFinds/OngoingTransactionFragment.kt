@@ -36,7 +36,7 @@ class OngoingTransactionFragment : Fragment(R.layout.fragment_ongoing_transactio
     private lateinit var transactionRecyclerView: RecyclerView
     private lateinit var transactionAdapter: OngoingTransactionAdapter
     private lateinit var groupEmptyView: Group
-    private var currentUserEmail: String? = null // Keep to know who is cancelling
+    private var currentUserEmail: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -53,11 +53,12 @@ class OngoingTransactionFragment : Fragment(R.layout.fragment_ongoing_transactio
         setupRecyclerView()
         setupObservers()
 
-        // Fetch current user email once for cancellation logic
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted { // Use launchWhenStarted
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             currentUserEmail = withContext(Dispatchers.IO) { UserManager.getSignedIn()?.email }
             Log.d("OngoingTransaction", "Current user email set to: $currentUserEmail")
-            if (currentUserEmail == null) { /* Maybe disable cancel buttons? */ }
+            if (currentUserEmail == null) { /* Maybe disable cancel buttons? */
+
+            }
         }
     }
     private fun setupRecyclerView() {
@@ -116,7 +117,6 @@ class OngoingTransactionFragment : Fragment(R.layout.fragment_ongoing_transactio
             onPositiveClick = {
                 viewModel.cancelOrReportTransaction(transaction, userEmail)
             }
-            // onNegativeClick = null // Default action is just dismiss
         )
     }
 
@@ -129,7 +129,7 @@ class OngoingTransactionFragment : Fragment(R.layout.fragment_ongoing_transactio
             positiveButtonText = "Report & Cancel",
             negativeButtonText = "No",
             onPositiveClick = {
-                viewModel.cancelOrReportTransaction(transaction, userEmail) // Report uses same VM logic
+                viewModel.cancelOrReportTransaction(transaction, userEmail)
             }
         )
     }
@@ -141,39 +141,35 @@ class OngoingTransactionFragment : Fragment(R.layout.fragment_ongoing_transactio
     fun showCustomConfirmationDialog(
         context: Context,
         message: String,
-        positiveButtonText: String = "Yes", // Default texts
+        positiveButtonText: String = "Yes",
         negativeButtonText: String = "No",
-        onPositiveClick: () -> Unit, // Lambda for positive action
-        onNegativeClick: (() -> Unit)? = null // Optional lambda for negative action
+        onPositiveClick: () -> Unit,
+        onNegativeClick: (() -> Unit)? = null
     ) {
         val dialog = Dialog(context)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false) // Or true if you want outside clicks to dismiss
-        dialog.setContentView(R.layout.dialog_confirmation) // Use the new layout
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_confirmation)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // Make corners round
 
-        // Find views inside the custom dialog layout
         val messageTextView = dialog.findViewById<TextView>(R.id.dialog_message_text)
         val positiveButton = dialog.findViewById<Button>(R.id.dialog_button_positive)
         val negativeButton = dialog.findViewById<Button>(R.id.dialog_button_negative)
 
-        // Check if views were found
         if (messageTextView == null || positiveButton == null || negativeButton == null) {
             Log.e("CustomDialog", "Error finding views in dialog_confirmation.xml")
             Toast.makeText(context, "Error showing dialog.", Toast.LENGTH_SHORT).show()
             return
         }
 
-        // Set the content
         messageTextView.text = message
         positiveButton.text = positiveButtonText
         negativeButton.text = negativeButtonText
 
-        // Set click listeners
         positiveButton.setOnClickListener {
             Log.d("CustomDialog", "Positive button clicked! Executing onPositiveClick lambda.") // <-- Add Log
 
-            onPositiveClick() // Execute the positive action
+            onPositiveClick()
             dialog.dismiss()
         }
 

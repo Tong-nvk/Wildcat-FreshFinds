@@ -1,4 +1,4 @@
-package cit.edu.WildcatFreshFinds // Or a suitable 'util' package
+package cit.edu.WildcatFreshFinds
 
 /**
  * Used as a wrapper for data that is exposed via a LiveData that represents an event.

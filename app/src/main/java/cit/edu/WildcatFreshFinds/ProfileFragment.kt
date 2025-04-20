@@ -33,11 +33,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private lateinit var userNameTextView: TextView
     private lateinit var emailTextView: TextView
-    private lateinit var cancellationCountTextView: TextView // Added for cancellation count
+    private lateinit var cancellationCountTextView: TextView 
 
     private lateinit var imagePickerLauncher: ActivityResultLauncher<String>
     private var currentDialogImageUri: Uri? = null
-    private var currentDialogImageView: ImageView? = null // To hold reference to dialog's ImageView
+    private var currentDialogImageView: ImageView? = null
     private var currentDialogImageFilePath: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,9 +85,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         val editButton = view.findViewById<Button>(R.id.edit_button)
         editButton.bringToFront()
 
-        userNameTextView = view.findViewById(R.id.user_name) // Make sure this ID exists in fragment_profile.xml
+        userNameTextView = view.findViewById(R.id.user_name)
         emailTextView = view.findViewById(R.id.email_value)
-        cancellationCountTextView = view.findViewById(R.id.tv_cancellations_received_count) // Use the ID from your XML
+        cancellationCountTextView = view.findViewById(R.id.tv_cancellations_received_count)
 
         Log.d("ProfileFragment", "onViewCreated: Fragment created")
 
@@ -175,11 +175,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         val etLastName = dialog.findViewById<EditText>(R.id.et_last_name)
         val etPassword = dialog.findViewById<EditText>(R.id.et_password)
 
-        // Check if views exist (crucial after layout change)
         if (etFirstName == null || etLastName == null || etPassword == null) {
             Log.e("ProfileFragment", "Error finding EditText views in dialog_edit.xml. Check IDs!")
             showToast("Error displaying edit dialog.")
-            return // Don't show dialog if views are missing
+            return
         }
 
 
@@ -189,7 +188,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
                 withContext(Dispatchers.Main) {
                     if (signedInUser != null) {
-                        // --- Populate new fields ---
                         etFirstName.setText(signedInUser.firstName ?: "")
                         etLastName.setText(signedInUser.lastName ?: "")
                         etPassword.setText(signedInUser.password ?: "")
@@ -221,7 +219,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 return@setOnClickListener
             }
 
-            // Check if data changed before calling editUser
             viewLifecycleOwner.lifecycleScope.launch {
                 var dataChanged = true
                 try {
@@ -235,12 +232,12 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                         }
                     } else {
                         showToast("Error verifying current data.")
-                        dataChanged = false // Don't proceed if error
+                        dataChanged = false
                     }
                 } catch (e: Exception) {
                     Log.e("ProfileFragment", "Error checking if data changed", e)
                     showToast("Error checking current data.")
-                    dataChanged = false // Don't proceed on error
+                    dataChanged = false
                 }
 
                 if (dataChanged) {
@@ -294,7 +291,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                         outputStream.write(buffer, 0, read)
                     }
                     outputStream.flush()
-                    newFilePath = destinationFile.absolutePath // Get the absolute path of the new file
+                    newFilePath = destinationFile.absolutePath
                     Log.d("ProfileFragment", "Image copied successfully to: $newFilePath")
                 }
             }
@@ -307,7 +304,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
-        dialog.setContentView(R.layout.dialog_sell) // Your dialog layout
+        dialog.setContentView(R.layout.dialog_sell)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         val cancelButton = dialog.findViewById<Button>(R.id.cancel_button)
@@ -316,9 +313,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         val etName = dialog.findViewById<EditText>(R.id.et_name)
         val etPrice = dialog.findViewById<EditText>(R.id.et_price)
         val etDescription = dialog.findViewById<EditText>(R.id.et_description)
-        val uploadButton = dialog.findViewById<Button>(R.id.upload_btn) // Find upload button
-        val etQuantity = dialog.findViewById<EditText>(R.id.et_quantity) // <-- Find quantity EditText
-        val productImageView = dialog.findViewById<ImageView>(R.id.product_img) // Find ImageView
+        val uploadButton = dialog.findViewById<Button>(R.id.upload_btn)
+        val etQuantity = dialog.findViewById<EditText>(R.id.et_quantity)
+        val productImageView = dialog.findViewById<ImageView>(R.id.product_img)
 
         currentDialogImageFilePath = null
         currentDialogImageView = productImageView
@@ -341,7 +338,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             val name = etName.text.toString().trim()
             val priceText = etPrice.text.toString().trim()
             val description = etDescription.text.toString().trim()
-            val quantityText = etQuantity.text.toString().trim() // <-- Get quantity text
+            val quantityText = etQuantity.text.toString().trim()
 
             if (name.isEmpty() || priceText.isEmpty() || description.isEmpty() || quantityText.isEmpty()) { // <-- Check quantityText
                 showToast("Please fill in all product details!")
@@ -362,7 +359,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 return@setOnClickListener
             }
 
-            if (currentDialogImageFilePath == null) { // <-- Check file path now
+            if (currentDialogImageFilePath == null) {
                 showToast("Please upload and process a product image!")
                 return@setOnClickListener
             }
@@ -420,9 +417,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
 
     private fun clearAllProductsData() {
-        lifecycleScope.launch { // Use lifecycleScope if in Fragment/Activity
+        lifecycleScope.launch {
             try {
-                withContext(Dispatchers.IO) { // Run database operation on IO thread
+                withContext(Dispatchers.IO) {
                     val dao = DatabaseManager.productDao(requireContext())
                     Log.d("ClearData", "Attempting to delete all products...")
                     dao.deleteAllProducts()

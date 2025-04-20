@@ -27,7 +27,7 @@ class LoginActivity : AppCompatActivity() {
         val loginButton = findViewById<Button>(R.id.login_button)
         val registerButton = findViewById<TextView>(R.id.sign_up_click)
 
-        UserManager.initialize(this) // Initialize UserManager!
+        UserManager.initialize(this)
 
         loginButton.setOnClickListener {
             val email = emailField.text.toString()
