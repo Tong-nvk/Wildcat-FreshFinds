@@ -1,15 +1,23 @@
 package cit.edu.WildcatFreshFinds
 
 import android.content.Context
-import androidx.room.*
+import androidx.room.* // Import required Room components
+// Import all DAOs and Entities
+import cit.edu.WildcatFreshFinds.UserDao
+import cit.edu.WildcatFreshFinds.ProductDao
+import cit.edu.WildcatFreshFinds.OngoingTransactionDao
+import cit.edu.WildcatFreshFinds.User
+import cit.edu.WildcatFreshFinds.Product
+import cit.edu.WildcatFreshFinds.OngoingTransaction
+import cit.edu.WildcatFreshFinds.TransactionStateConverter // Import converter
 
 
 @Database(
     entities = [User::class, Product::class, OngoingTransaction::class],
-    version = 4, //
+    version = 7,
     exportSchema = false
 )
-
+@TypeConverters(TransactionStateConverter::class) // <-- Add TypeConverter for Enum
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao

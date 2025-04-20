@@ -15,7 +15,17 @@
         android:layout_height="180dp"
         android:background="@color/container_bg"
         android:padding="12dp">
-
+        <TextView
+            android:id="@+id/transaction_time_remaining"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/anybody_bold"
+            android:gravity="start"
+            android:textColor="@color/maroon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/detail_product_image_card"
+            />
         <androidx.cardview.widget.CardView
             android:id="@+id/detail_product_image_card"
             android:layout_width="70dp"
@@ -23,7 +33,7 @@
             app:cardBackgroundColor="@color/maroon"
             app:layout_constraintBottom_toTopOf="@id/button_chat_teams"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/transaction_time_remaining"
+            app:layout_constraintTop_toTopOf="parent"
             app:cardElevation="12dp"
 
             >
@@ -35,9 +45,23 @@
             android:src="@drawable/empty_img"
             android:layout_margin="5dp"
             android:elevation="20dp"
+
             android:background="@color/gold"
           />
         </androidx.cardview.widget.CardView>
+
+        <ImageButton
+            android:id="@+id/button_report_issue"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/report"
+            android:background="@color/container_bg"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:clickable="true"
+            android:focusable="true"
+            />
         <TextView
 
             android:id="@+id/transaction_item_name"
@@ -53,17 +77,7 @@
             app:layout_constraintTop_toTopOf="@id/detail_product_image_card"
             app:layout_constraintBottom_toTopOf="@id/transaction_item_details"
             tools:text="Product Name" />
-       <TextView
-        android:id="@+id/transaction_time_remaining"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-           app:layout_constraintStart_toStartOf="@id/detail_product_image_card"
-           app:layout_constraintTop_toTopOf="parent"
-           app:layout_constraintBottom_toTopOf="@id/detail_product_image_card"
-        android:textColor="@color/maroon"
-        android:fontFamily="@font/anybody_bold"
 
-        />
 
 
         <TextView
@@ -93,6 +107,20 @@
             app:layout_constraintTop_toBottomOf="@id/transaction_item_details"
             tools:text="Seller: seller@cit.edu" />
 
+        <TextView
+            android:id="@+id/transaction_status"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/anybody_regular"
+            android:gravity="start"
+            android:textColor="@color/maroon"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            app:layout_constraintStart_toStartOf="@id/transaction_seller_email"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/transaction_seller_email"
+            tools:text="Status: Waiting for buyer confirmation" />
 
         <Button
             android:id="@+id/button_chat_teams"
@@ -118,7 +146,7 @@
             android:layout_height="40dp"
             android:background="@drawable/maroon_button"
             android:fontFamily="@font/anybody_black"
-            android:text="SUCCESSFUL"
+            android:text="CONFIRM"
             android:textColor="@color/gold"
             app:layout_constraintStart_toEndOf="@+id/button_chat_teams"
             app:layout_constraintEnd_toStartOf="@id/button_unsuccessful"
@@ -130,7 +158,6 @@
         <Button
 
             android:id="@+id/button_unsuccessful"
-            style="?attr/materialButtonOutlinedStyle"
             android:layout_width="100dp"
             android:layout_height="40dp"
             app:layout_constraintStart_toEndOf="@+id/button_successful"
@@ -141,7 +168,7 @@
             android:background="@drawable/maroon_button"
             android:textColor="@color/gold"
             android:textSize="11sp"
-            android:text="UNSUCCESSFUL"
+            android:text="CANCEL"
             android:fontFamily="@font/anybody_black"
 
             />

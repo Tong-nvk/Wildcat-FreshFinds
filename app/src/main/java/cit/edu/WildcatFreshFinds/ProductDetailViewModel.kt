@@ -41,19 +41,17 @@ class ProductDetailViewModel(application: Application) : AndroidViewModel(applic
         Log.d("ProductDetailViewModel", "Initiating purchase VM logic for ${product.id}, quantity: $quantityBought")
         viewModelScope.launch {
             try {
-                // Final checks before DB operations
-                val currentProductState = withContext(Dispatchers.IO) { productDao.findById(product.id)?.quantity ?: -1 }
-                if (quantityBought <= 0 || quantityBought > currentProductState) {
-                    _toastMessage.postValue(Event("Quantity unavailable or invalid."))
+                // Re-check quantity in DB for safety before proceeding
+                val currentDbQuantity = withContext(Dispatchers.IO) { productDao.getProductById(product.id)?.quantity ?: -1 }
+                if (quantityBought <= 0 || quantityBought > currentDbQuantity) {
+                    _toastMessage.postValue(Event("Quantity unavailable or invalid (currently $currentDbQuantity)."))
                     return@launch
                 }
-                if (product.sellerEmail == null || product.price == null) {
-                    _toastMessage.postValue(Event("Error: Incomplete product data."))
-                    return@launch
-                }
+                if (product.sellerEmail == null || product.price == null) { /* ... error handling ... */ return@launch}
 
-                val newProductQuantity = product.quantity - quantityBought
-                val updatedProduct = product.copy(quantity = newProductQuantity)
+                val newProductQuantity = currentDbQuantity - quantityBought // Use DB quantity
+                val updatedProduct = product.copy(quantity = newProductQuantity) // Create copy with new quantity
+
                 val newTransaction = OngoingTransaction(
                     productId = product.id,
                     productName = product.name,
@@ -61,23 +59,27 @@ class ProductDetailViewModel(application: Application) : AndroidViewModel(applic
                     pricePerItem = product.price,
                     quantityBought = quantityBought,
                     totalPrice = product.price * quantityBought,
-                    sellerEmail = product.sellerEmail,
-                    buyerEmail = buyerEmail
+                    sellerEmail = product.sellerEmail, // Already checked not null
+                    buyerEmail = buyerEmail,
+                    state = TransactionState.ONGOING // <-- Set initial state
                 )
 
                 // Perform DB operations
                 withContext(Dispatchers.IO) {
-                    productDao.update(updatedProduct) // Update product quantity
-                    transactionDao.insertTransaction(newTransaction) // Insert transaction record
+                    // It's generally safer to perform these in a Room @Transaction method if possible
+                    // to ensure atomicity, but separate calls work for now.
+                    productDao.update(updatedProduct)
+                    transactionDao.insertTransaction(newTransaction)
                     Log.d("ProductDetailViewModel", "DB updated: Product quantity decreased, Transaction inserted.")
-                    scheduleTimeoutWorker(getApplication(), newTransaction.transactionId, newTransaction.deadlineTimestamp)
+                    // TODO: Schedule WorkManager task for timeout check here
+                    // scheduleTimeoutWorker(getApplication(), newTransaction.transactionId, newTransaction.deadlineTimestamp)
                 }
 
                 _toastMessage.postValue(Event("Purchase initiated!"))
                 _purchaseInitiated.postValue(Event(true))
 
             } catch (e: Exception) {
-                Log.e("ProductDetailViewModel", "Error during purchase initiation (${e::class.java.simpleName}): ${e.message}", e)
+                Log.e("ProductDetailViewModel", "Error during purchase initiation: ${e.message}", e)
                 _toastMessage.postValue(Event("Purchase failed. Please try again. ${e.localizedMessage}"))
             }
         }

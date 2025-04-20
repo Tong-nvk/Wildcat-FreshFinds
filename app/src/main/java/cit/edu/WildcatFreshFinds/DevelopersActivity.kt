@@ -22,12 +22,9 @@ class DevelopersActivity : AppCompatActivity() {
             finish()
 
             Log.e("Button Clicked", "Back Button Navigation Button Clicked")
-            showToast("Settings")
 
         }
     }
 
-    private fun showToast(message: String)  {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
+
 }

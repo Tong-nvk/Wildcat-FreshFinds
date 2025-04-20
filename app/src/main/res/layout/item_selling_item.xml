@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardUseCompatPadding="true"
+    app:cardBackgroundColor="@color/container_bg"
+    app:cardElevation="2dp"
+    app:cardCornerRadius="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+        <TextView
+            android:id="@+id/selling_time_remaining"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/anybody_bold"
+            android:gravity="start"
+            android:textColor="@color/maroon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/detail_product_image_card"
+            />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/detail_product_image_card"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:cardBackgroundColor="@color/maroon"
+            app:layout_constraintBottom_toTopOf="@id/button_chat_buyer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:cardElevation="12dp"
+
+            >
+            <ImageView
+                android:id="@+id/selling_item_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/empty_img"
+                android:layout_margin="5dp"
+                android:elevation="20dp"
+                android:background="@color/gold"
+                />
+        </androidx.cardview.widget.CardView>
+=
+        <TextView
+            android:id="@+id/selling_item_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:textColor="@color/maroon"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/anybody_black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/detail_product_image_card"
+            app:layout_constraintTop_toTopOf="@id/detail_product_image_card"
+            tools:text="Product Name Being Sold" />
+
+        <TextView
+            android:id="@+id/selling_item_details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="12dp"
+            android:textSize="14sp"
+            android:textColor="@color/gold"
+            android:fontFamily="@font/anybody_regular"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/detail_product_image_card"
+            app:layout_constraintTop_toBottomOf="@id/selling_item_name"
+            tools:text="Qty: 1 | Total: ₱500.00" />
+
+        <TextView
+            android:id="@+id/selling_buyer_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            android:textSize="12sp"
+            android:textColor="@color/gold"
+            android:fontFamily="@font/anybody_regular"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/detail_product_image_card"
+            app:layout_constraintTop_toBottomOf="@id/selling_item_details"
+            tools:text="Buyer: buyer@cit.edu" />
+        <ImageButton
+            android:id="@+id/button_report_issue_selling"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/report"
+            android:background="@color/container_bg"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:clickable="true"
+            android:focusable="true"
+            />
+        <TextView
+            android:id="@+id/selling_transaction_status"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/anybody_regular"
+            android:gravity="start"
+            android:textColor="@color/maroon"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            app:layout_constraintStart_toStartOf="@id/selling_buyer_email"
+            app:layout_constraintEnd_toEndOf="@id/selling_buyer_email"
+            app:layout_constraintTop_toBottomOf="@id/selling_buyer_email"
+            tools:text="Status: Waiting for buyer confirmation" />
+
+
+
+        <Button
+            android:id="@+id/button_chat_buyer"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:minHeight="40dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:background="@drawable/maroon_button"
+            android:fontFamily="@font/anybody_black"
+            android:text="Message Buyer"
+            android:textColor="@color/gold"
+            android:textSize="11sp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintTop_toBottomOf="@+id/selling_transaction_status"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/button_confirm_handover" />
+
+        <Button
+            android:id="@+id/button_confirm_handover"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:minHeight="40dp"
+            android:background="@drawable/maroon_button"
+            android:fontFamily="@font/anybody_black"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="Confirm Handover"
+            android:textColor="@color/gold"
+            android:textSize="11sp"
+            app:layout_constraintTop_toTopOf="@id/button_chat_buyer"
+            app:layout_constraintBottom_toBottomOf="@id/button_chat_buyer"
+            app:layout_constraintStart_toEndOf="@+id/button_chat_buyer"
+            app:layout_constraintEnd_toStartOf="@id/button_cancel_selling" />
+
+        <Button
+            android:id="@+id/button_cancel_selling"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:minHeight="40dp"
+            android:background="@drawable/maroon_button"
+            android:fontFamily="@font/anybody_black"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="CANCEL SELLING"
+            android:textColor="@color/gold"
+            android:textSize="11sp"
+
+
+            app:layout_constraintTop_toTopOf="@id/button_confirm_handover"
+            app:layout_constraintBottom_toBottomOf="@id/button_chat_buyer"
+            app:layout_constraintStart_toEndOf="@+id/button_confirm_handover"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

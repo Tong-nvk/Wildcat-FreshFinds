@@ -35,7 +35,6 @@ class HomeActivity : AppCompatActivity() {
 
         homeButton.setOnClickListener {
             Log.e("Button Click", "Home Navigation Button Clicked!")
-            showToast("Home")
 
             replaceFragment(homeFragment)
             currentButton?.let { navSetInactive(it) }
@@ -45,7 +44,6 @@ class HomeActivity : AppCompatActivity() {
 
         profileButton.setOnClickListener {
             Log.e("Button Click", "Profile Navigation Button Clicked!")
-            showToast("Profile")
 
             replaceFragment(profileFragment)
             currentButton?.let { navSetInactive(it) }
@@ -55,7 +53,6 @@ class HomeActivity : AppCompatActivity() {
 
         transactionButton.setOnClickListener {
             Log.e("Button Click", "Transaction Navigation Button Clicked!")
-            showToast("Transaction")
 
             replaceFragment(transactionFragment)
             currentButton?.let { navSetInactive(it) }
@@ -79,8 +76,6 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
+
 }
 

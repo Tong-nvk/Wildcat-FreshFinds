@@ -32,5 +32,13 @@ interface ProductDao {
 
     @Delete
     suspend fun delete(product: Product)
-    // --- End Keep ---
+
+    @Query("SELECT * FROM products WHERE id = :productId")
+    suspend fun getProductById(productId: String): Product? // Need suspend version
+
+    @Query("UPDATE products SET quantity = quantity + :quantityToAdd WHERE id = :productId")
+    suspend fun addQuantityToProduct(productId: String, quantityToAdd: Int): Int // Returns rows affected
+
+    @Query("SELECT * FROM products WHERE sellerEmail = :sellerEmail ORDER BY name ASC")
+    fun getProductsBySeller(sellerEmail: String): LiveData<List<Product>>
 }

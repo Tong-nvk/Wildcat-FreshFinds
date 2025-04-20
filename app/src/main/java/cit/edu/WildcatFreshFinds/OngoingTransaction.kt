@@ -2,12 +2,35 @@ package cit.edu.WildcatFreshFinds
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
 import java.util.UUID
 import java.util.concurrent.TimeUnit
 
-enum class TransactionState { ONGOING, SUCCESSFUL, UNSUCCESSFUL, TIMED_OUT }
+enum class TransactionState {
+    ONGOING,
+    SELLER_CONFIRMED,
+    BUYER_CONFIRMED,
+    COMPLETED,
+    CANCELLED_BY_BUYER,
+    CANCELLED_BY_SELLER,
+    EXPIRED
+}
+
+class TransactionStateConverter {
+    @TypeConverter
+    fun fromTransactionState(value: TransactionState?): String? {
+        return value?.name
+    }
+
+    @TypeConverter
+    fun toTransactionState(value: String?): TransactionState? {
+        return value?.let { enumValueOf<TransactionState>(it) }
+    }
+}
 
 @Entity(tableName = "ongoing_transactions")
+@TypeConverters(TransactionStateConverter::class)
 data class OngoingTransaction(
     @PrimaryKey val transactionId: String = UUID.randomUUID().toString(),
     val productId: String,
@@ -20,6 +43,8 @@ data class OngoingTransaction(
     val buyerEmail: String,
     val transactionTimestamp: Long = System.currentTimeMillis(),
     var state: TransactionState = TransactionState.ONGOING,
-    val deadlineTimestamp: Long = System.currentTimeMillis() + TimeUnit.DAYS.toMillis(3) // Example 3 days
+    var completionTimestamp: Long? = null,
+    var cancellationTimestamp: Long? = null,
+    val deadlineTimestamp: Long = transactionTimestamp + TimeUnit.DAYS.toMillis(3)
+
 )
-// Note: This class doesn't necessarily need to be Parcelable unless passed via Intents

@@ -134,7 +134,18 @@
         android:gravity="center_vertical"
         />
 
+    <TextView
+        android:id="@+id/tv_cancellations_received_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/password_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/edit_button_container"
+        android:elevation="11dp"
+        android:fontFamily="@font/anybody_black"
 
+        android:textColor="@color/maroon" />
 
     <FrameLayout
         android:id="@+id/edit_button_container"

@@ -1,4 +1,4 @@
-package cit.edu.WildcatFreshFinds // Or a 'worker' package
+package cit.edu.WildcatFreshFinds
 
 import android.content.Context
 import android.util.Log
@@ -6,70 +6,71 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.util.concurrent.TimeUnit
 
 class TransactionTimeoutWorker(appContext: Context, workerParams: WorkerParameters) :
     CoroutineWorker(appContext, workerParams) {
 
     companion object {
-        const val KEY_TRANSACTION_ID = "TRANSACTION_ID" // Use constant for key
+        const val KEY_TRANSACTION_ID = "TRANSACTION_ID"
     }
 
     override suspend fun doWork(): Result {
         val transactionId = inputData.getString(KEY_TRANSACTION_ID)
             ?: run {
                 Log.e("TimeoutWorker", "Missing TRANSACTION_ID in worker input data.")
-                return Result.failure()
+                return Result.failure() // Failure if ID is missing
             }
 
         Log.d("TimeoutWorker", "Worker running for Tx: $transactionId")
 
-        return withContext(Dispatchers.IO) { // Ensure DB access is on IO thread
+        return withContext(Dispatchers.IO) {
             try {
                 val db = AppDatabase.getDatabase(applicationContext)
                 val transactionDao = db.ongoingTransactionDao()
-                val userDao = db.userDao()
+                val productDao = db.productDao() // Need this for quantity restore
 
+                // Fetch the specific transaction
                 val transaction = transactionDao.getTransactionById(transactionId)
 
-                if (transaction != null && transaction.state == TransactionState.ONGOING) {
+                // Define states that can expire
+                val expirableStates = listOf(
+                    TransactionState.ONGOING,
+                    TransactionState.BUYER_CONFIRMED,
+                    TransactionState.SELLER_CONFIRMED
+                )
+
+                if (transaction != null && transaction.state in expirableStates) {
+                    // Check if deadline timestamp has passed
                     if (System.currentTimeMillis() >= transaction.deadlineTimestamp) {
                         Log.w("TimeoutWorker", "Transaction $transactionId TIMED OUT!")
 
-                        val buyerEmail = transaction.buyerEmail
-                        val sellerEmail = transaction.sellerEmail
-                        var success = true
+                        // 1. Restore Product Quantity
+                        val qtyRestored = productDao.addQuantityToProduct(transaction.productId, transaction.quantityBought)
+                        if(qtyRestored > 0) Log.d("TimeoutWorker", "Restored quantity for product: ${transaction.productId}")
+                        else Log.w("TimeoutWorker", "Failed to restore quantity for product: ${transaction.productId}")
 
-                        if (buyerEmail.isNotBlank()) {
-                            val buyerRows = userDao.incrementUnsuccessfulCount(buyerEmail)
-                            Log.d("TimeoutWorker", "Incremented buyer ($buyerEmail) count: $buyerRows rows affected.")
-                        } else {
-                            Log.e("TimeoutWorker", "Cannot increment buyer count, email blank for Tx $transactionId")
-                            success = false
-                        }
 
-                        if (sellerEmail.isNotBlank()) {
-                            val sellerRows = userDao.incrementUnsuccessfulCount(sellerEmail)
-                            Log.d("TimeoutWorker", "Incremented seller ($sellerEmail) count: $sellerRows rows affected.")
-                        } else {
-                            Log.e("TimeoutWorker", "Cannot increment seller count, email blank for Tx $transactionId")
-                            success = false
-                        }
+                        // 2. Update transaction state to EXPIRED
+                        val updatedRows = transactionDao.updateTransactionState(transactionId, TransactionState.EXPIRED)
+                        Log.d("TimeoutWorker", "Marked transaction $transactionId as EXPIRED ($updatedRows rows).")
 
-                        val deletedRows = transactionDao.deleteTransactionById(transactionId)
-                        Log.d("TimeoutWorker", "Processed timeout for Tx: $transactionId. Deleted $deletedRows rows.")
+                        // 3. DO NOT increment user cancellation/unsuccessful counts for automatic timeouts
 
-                        if (success) Result.success() else Result.failure()
+                        Result.success()
 
                     } else {
-                        Log.d("TimeoutWorker", "Transaction $transactionId not yet passed deadline.")
+                        Log.d("TimeoutWorker", "Transaction $transactionId has not timed out yet (Deadline: ${transaction.deadlineTimestamp}).")
+                        // Reschedule? No, OneTimeWorkRequest with initial delay handles this. Work is done.
                         Result.success()
                     }
                 } else {
-                    Log.d("TimeoutWorker", "Transaction $transactionId not found or no longer ONGOING.")
-                    Result.success()
+                    Log.d("TimeoutWorker", "Transaction $transactionId not found or not in an expirable state (${transaction?.state}). Work is done.")
+                    Result.success() // Nothing to time out
                 }
             } catch (e: Exception) {
                 Log.e("TimeoutWorker", "Error processing timeout for $transactionId", e)
+                // Retry might lock up if DB issue persists, consider failure or limited retries
                 Result.retry()
             }
         }

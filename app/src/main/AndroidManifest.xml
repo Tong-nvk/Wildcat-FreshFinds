@@ -36,7 +36,10 @@
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
-
+        <activity
+            android:name=".MyListingsActivity"
+            android:exported="false"
+            android:label="My Listings" />
         <activity
             android:name=".LandingActivity"
             android:exported="true">

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardUseCompatPadding="true"
+    app:cardBackgroundColor="@color/container_bg"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="2dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/detail_product_image_card"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:cardBackgroundColor="@color/maroon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:cardElevation="12dp"
+
+            >
+            <ImageView
+                android:id="@+id/my_listing_item_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/empty_img"
+                android:layout_margin="5dp"
+                android:elevation="20dp"
+                android:background="@color/gold"
+                />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/my_listing_item_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="8dp" android:fontFamily="@font/anybody_bold"
+            android:textColor="@color/maroon"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/button_delete_listing"
+            app:layout_constraintStart_toEndOf="@id/detail_product_image_card"
+            app:layout_constraintTop_toTopOf="@id/detail_product_image_card" tools:text="My Listed Product Name" />
+
+        <TextView
+            android:id="@+id/my_listing_item_price"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/anybody_regular"
+            android:textColor="@color/gold"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/my_listing_item_name"
+            app:layout_constraintTop_toBottomOf="@id/my_listing_item_name"
+            app:layout_constraintEnd_toEndOf="@id/my_listing_item_name" tools:text="₱500.00" />
+
+        <TextView
+            android:id="@+id/my_listing_item_quantity"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/anybody_regular"
+            android:textColor="@color/maroon"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/my_listing_item_name"
+            app:layout_constraintTop_toBottomOf="@id/my_listing_item_price"
+            app:layout_constraintBottom_toBottomOf="@id/detail_product_image_card" app:layout_constraintEnd_toEndOf="@id/my_listing_item_name" tools:text="Qty Remaining: 5" />
+
+        <ImageButton
+            android:id="@+id/button_delete_listing"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+
+            android:src="@android:drawable/ic_delete" android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Delete"
+            android:scaleType="centerInside" app:tint="@color/maroon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" /> </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

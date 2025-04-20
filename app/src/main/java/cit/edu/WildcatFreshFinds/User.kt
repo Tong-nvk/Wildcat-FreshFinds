@@ -12,5 +12,5 @@ data class User(
     var firstName: String,
     var lastName: String,
     var password: String,
-    var unsuccessfulTransactionCount: Int = 0
+    var receivedCancellationCount: Int = 0
 ) : Parcelable

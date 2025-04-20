@@ -1,9 +1,14 @@
 package cit.edu.WildcatFreshFinds
 
+import android.app.Dialog
+import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.Window
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -200,21 +205,64 @@ class ProductDetailActivity : AppCompatActivity() {
 
 
     private fun showPurchaseConfirmationDialog(product: Product, quantity: Int, onConfirm: (Boolean) -> Unit) {
-        AlertDialog.Builder(this)
-            .setTitle("Confirm Purchase")
-            .setMessage("Are you sure you want to buy $quantity of ${product.name ?: "this item"}?")
-            .setPositiveButton("Yes") { dialog, _ ->
-                onConfirm(true)
-                dialog.dismiss()
+        // No longer directly uses AlertDialog.Builder
+        showCustomConfirmationDialog(
+            context = this, // Activity context
+            message = "Are you sure you want to buy $quantity of ${product.name ?: "this item"}?",
+            positiveButtonText = "Yes",
+            negativeButtonText = "No",
+            onPositiveClick = {
+                onConfirm(true) // Call original lambda with true
+            },
+            onNegativeClick = {
+                onConfirm(false) // Call original lambda with false
             }
-            .setNegativeButton("No") { dialog, _ ->
-                onConfirm(false)
-                dialog.dismiss()
-            }
-            .show()
+        )
     }
+    fun showCustomConfirmationDialog(
+        context: Context,
+        message: String,
+        positiveButtonText: String = "Yes", // Default texts
+        negativeButtonText: String = "No",
+        onPositiveClick: () -> Unit, // Lambda for positive action
+        onNegativeClick: (() -> Unit)? = null // Optional lambda for negative action
+    ) {
+        val dialog = Dialog(context)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false) // Or true if you want outside clicks to dismiss
+        dialog.setContentView(R.layout.dialog_confirmation) // Use the new layout
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // Make corners round
 
+        // Find views inside the custom dialog layout
+        val messageTextView = dialog.findViewById<TextView>(R.id.dialog_message_text)
+        val positiveButton = dialog.findViewById<Button>(R.id.dialog_button_positive)
+        val negativeButton = dialog.findViewById<Button>(R.id.dialog_button_negative)
 
+        // Check if views were found
+        if (messageTextView == null || positiveButton == null || negativeButton == null) {
+            Log.e("CustomDialog", "Error finding views in dialog_confirmation.xml")
+            Toast.makeText(context, "Error showing dialog.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Set the content
+        messageTextView.text = message
+        positiveButton.text = positiveButtonText
+        negativeButton.text = negativeButtonText
+
+        // Set click listeners
+        positiveButton.setOnClickListener {
+            onPositiveClick() // Execute the positive action
+            dialog.dismiss()
+        }
+
+        negativeButton.setOnClickListener {
+            onNegativeClick?.invoke() // Execute the negative action (if provided)
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }

@@ -31,7 +31,6 @@ class SettingsActivity : AppCompatActivity() {
         val logoutButton = findViewById<CardView>(R.id.log_out_container)
         logoutButton.setOnClickListener {
             Log.e("Button Clicked", "Log Out Navigation Button Clicked")
-            showToast("Log Out")
 
             showCustomDialogBox()
 
@@ -40,7 +39,6 @@ class SettingsActivity : AppCompatActivity() {
         val backButton = findViewById<ImageView>(R.id.back_icon)
         backButton.setOnClickListener {
             Log.e("Button Clicked", "Back Button Navigation Button Clicked")
-            showToast("Profile")
 
             finish()
         }
@@ -48,7 +46,6 @@ class SettingsActivity : AppCompatActivity() {
         val developersButton = findViewById<CardView>(R.id.developer_container)
         developersButton.setOnClickListener {
             Log.e("Button Clicked", "Developer Button Navigation Button Clicked")
-            showToast("Developer")
 
             val intent = Intent(this, DevelopersActivity::class.java)
             startActivity(intent)
@@ -57,9 +54,15 @@ class SettingsActivity : AppCompatActivity() {
         val communityGuidelinesButton = findViewById<CardView>(R.id.community_guidelines_container)
         communityGuidelinesButton.setOnClickListener {
             Log.e("Button Clicked", "Community Guidelines Button Navigation Button Clicked")
-            showToast("Community Guidelines")
 
             val intent = Intent(this, CommunityGuidelinesActivity::class.java)
+            startActivity(intent)
+        }
+        val allSellingItemsButton = findViewById<CardView>(R.id.all_selling_items_container)
+        allSellingItemsButton.setOnClickListener {
+            Log.e("Button Clicked", "All Selling Items Navigation Button Clicked ")
+
+            val intent = Intent(this, MyListingsActivity::class.java)
             startActivity(intent)
         }
 
@@ -79,12 +82,17 @@ class SettingsActivity : AppCompatActivity() {
 
         logOutButton.setOnClickListener {
             UserManager.signOut()
+            Log.d("SettingsActivity", "User signed out.") // Use Log.d for info
 
-            Log.e("Button Click", "Log Out Button Navigation Clicked")
-            showToast("Landing")
-            finish()
-            val intent = Intent(this, LandingActivity::class.java)
+            val intent = Intent(this, LandingActivity::class.java) // Go to Landing/Login
+
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
             startActivity(intent)
+
+
+            finish()
+            Log.d("SettingsActivity", "Navigating to LandingActivity and finishing SettingsActivity.")
 
         }
 
@@ -93,7 +101,5 @@ class SettingsActivity : AppCompatActivity() {
         }
         dialog.show()
     }
-    private fun showToast(message: String)  {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
+
 }

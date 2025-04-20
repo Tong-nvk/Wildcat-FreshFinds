@@ -33,6 +33,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private lateinit var userNameTextView: TextView
     private lateinit var emailTextView: TextView
+    private lateinit var cancellationCountTextView: TextView // Added for cancellation count
 
     private lateinit var imagePickerLauncher: ActivityResultLauncher<String>
     private var currentDialogImageUri: Uri? = null
@@ -86,6 +87,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         userNameTextView = view.findViewById(R.id.user_name) // Make sure this ID exists in fragment_profile.xml
         emailTextView = view.findViewById(R.id.email_value)
+        cancellationCountTextView = view.findViewById(R.id.tv_cancellations_received_count) // Use the ID from your XML
 
         Log.d("ProfileFragment", "onViewCreated: Fragment created")
 
@@ -118,29 +120,43 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         viewLifecycleOwner.lifecycleScope.launch {
             var displayName = "Guest"
             var displayEmail = ""
-
+            var cancellationsReceived = 0
+            var isUserLoggedIn = false
             try {
                 val signedInUser = withContext(Dispatchers.IO) { UserManager.getSignedIn() }
-
                 if (signedInUser != null) {
-                    // --- Concatenate first and last name ---
-                    displayName = "${signedInUser.firstName ?: ""} ${signedInUser.lastName ?: ""}".trim()
-                    if (displayName.isBlank()) { displayName = "User" } // Fallback
+                    isUserLoggedIn = true
+                    displayName = "${signedInUser.firstName ?: ""} ${signedInUser.lastName ?: ""}".trim().ifBlank { "User" }
                     displayEmail = signedInUser.email
-                    Log.d("ProfileFragment", "updateUI: Fetched user ${signedInUser.email}")
+                    cancellationsReceived = signedInUser.receivedCancellationCount // Get count
+                    Log.d("ProfileFragment", "updateUI: Fetched ${signedInUser.email}, Cancels: $cancellationsReceived")
                 } else {
-                    Log.w("ProfileFragment", "updateUI: signedInUser is null!")
+                    Log.w("ProfileFragment", "updateUI: signedInUser is null")
                 }
             } catch (e: Exception) {
-                Log.e("ProfileFragment", "updateUI: Error getting user data: ${e.message}", e)
+                Log.e("ProfileFragment", "updateUI: Error getting user data", e)
                 showToast("Error loading profile data.")
                 displayName = "Error"
                 displayEmail = "Error"
             }
 
-            // Update UI
+            // Update TextViews
             userNameTextView.text = displayName
             emailTextView.text = displayEmail
+
+            // Update and show/hide cancellation count TextView
+            if (isUserLoggedIn) {
+                if(::cancellationCountTextView.isInitialized) { // Check if lateinit is init
+                    cancellationCountTextView.text = "Reports Received: $cancellationsReceived"
+                    cancellationCountTextView.visibility = View.VISIBLE
+                } else {
+                    Log.e("ProfileFragment", "cancellationCountTextView not initialized!")
+                }
+            } else {
+                if(::cancellationCountTextView.isInitialized) {
+                    cancellationCountTextView.visibility = View.GONE
+                }
+            }
         }
     }
 
