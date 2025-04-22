@@ -8,7 +8,7 @@
     android:background="@color/background"
     android:fitsSystemWindows="true"
 
-    tools:context=".CommunityGuidelinesActivity">
+    tools:context=".activity.CommunityGuidelinesActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"

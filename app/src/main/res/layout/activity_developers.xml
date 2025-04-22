@@ -9,7 +9,7 @@
     android:background="@color/background"
     android:fitsSystemWindows="true"
 
-    tools:context=".DevelopersActivity">
+    tools:context=".activity.DevelopersActivity">
 
     <View
         android:id="@+id/header"

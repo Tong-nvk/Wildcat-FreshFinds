@@ -6,7 +6,7 @@
     android:fillViewport="true"
     android:fitsSystemWindows="true"
 
-    tools:context=".ProfileFragment">
+    tools:context=".fragment.ProfileFragment">
 
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -22,7 +22,6 @@
         android:id="@+id/profile_container"
         android:layout_width="0dp"
         android:layout_height="355dp"
-
         app:layout_constraintWidth_max="355dp"
         android:background="@color/container_bg"
         app:cardBackgroundColor="@color/container_bg"
@@ -40,15 +39,29 @@
 
     <ImageView
         android:id="@+id/profile_icon"
-        android:layout_width="152dp"
-        android:layout_height="149dp"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
         android:background="@drawable/profile_icon"
-        android:elevation="11dp"
+        android:elevation="17dp"
         app:layout_constraintBottom_toTopOf="@id/profile_container"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/profile_container"
         android:contentDescription="@string/profile_icon" />
+
+    <View
+        android:id="@+id/detail_product_image_card"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:layout_constraintBottom_toTopOf="@id/profile_container"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/profile_container"
+        android:contentDescription="@string/profile_icon"
+        android:elevation="16dp"
+        android:background="@drawable/sirkol"
+        />
+
 
     <TextView
         android:id="@+id/user_name"
@@ -56,14 +69,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="11dp"
-
+        android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/profile_icon"
         app:layout_constraintStart_toStartOf="@id/profile_container"
         app:layout_constraintEnd_toEndOf="@id/profile_container"
-
+        android:layout_marginTop="10dp"
         android:text="@string/john_doe"
         android:fontFamily="@font/anybody_black"
-        android:textSize="25sp"
+        android:textSize="24sp"
         android:textColor="@color/maroon"
         />
 

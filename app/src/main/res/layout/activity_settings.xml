@@ -8,7 +8,7 @@
     android:background="@color/background"
     android:fitsSystemWindows="true"
 
-    tools:context=".SettingsActivity">
+    tools:context=".activity.SettingsActivity">
 
 
     <View

@@ -5,7 +5,7 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         xmlns:tools="http://schemas.android.com/tools"
-        tools:context=".TransactionFragment"
+        tools:context=".fragment.TransactionFragment"
         android:layout_height="match_parent"
     android:fitsSystemWindows="true"
 

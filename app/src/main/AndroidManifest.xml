@@ -14,34 +14,34 @@
         android:theme="@style/Theme.WildcatFreshFinds"
         tools:targetApi="31">
         <activity
-            android:name=".CommunityGuidelinesActivity"
+            android:name=".activity.CommunityGuidelinesActivity"
             android:exported="false" />
 
 
         <activity
-            android:name=".HomeActivity"
+            android:name=".activity.HomeActivity"
             android:exported="true" android:windowSoftInputMode="adjustPan"
             >
         </activity>
         <activity
-            android:name=".DevelopersActivity"
+            android:name=".activity.DevelopersActivity"
             android:exported="false" />
         <activity
-            android:name=".SettingsActivity"
+            android:name=".activity.SettingsActivity"
             android:exported="false" />
 
         <activity
-            android:name=".RegisterActivity"
+            android:name=".activity.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".MyListingsActivity"
+            android:name=".activity.MyListingsActivity"
             android:exported="false"
             android:label="My Listings" />
         <activity
-            android:name=".LandingActivity"
+            android:name=".activity.LandingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -50,7 +50,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ProductDetailActivity"
+            android:name=".activity.ProductDetailActivity"
             android:exported="false" />
     </application>
 
